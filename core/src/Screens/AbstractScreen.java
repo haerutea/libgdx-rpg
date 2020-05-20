@@ -5,10 +5,10 @@ import com.badlogic.gdx.Screen;
 import edu.cis.pokemon.Pokemon;
 
 public abstract class AbstractScreen implements Screen {
-    private Pokemon app;
+    private Pokemon game;
 
-    public AbstractScreen(Pokemon app) {
-        this.app = app;
+    public AbstractScreen(Pokemon game) {
+        this.game = game;
     }
 
     @Override
