@@ -1,9 +1,11 @@
 package edu.cis.pokemon.Scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -18,9 +20,12 @@ import edu.cis.pokemon.Utils.PKMConstants;
 public class Hud implements Disposable
 {
     public Stage stage;
+    public Stage menuStage;
     private Viewport viewport;
+    private Viewport menuViewport;
 
     private LocalDateTime localDateTime;
+    private Actor menu;
 
     Label dateTimeLabel;
 
@@ -40,9 +45,27 @@ public class Hud implements Disposable
         table.top().right().padTop(10).padRight(10); //go to top right
         table.add(dateTimeLabel);
         table.row();
-        //TODO: add menu underneath to show up only when button is pressed
 
         stage.addActor(table);
+
+        menuViewport = new FitViewport(PKMConstants.V_WIDTH, PKMConstants.V_HEIGHT, new OrthographicCamera());
+        menuStage = new Stage(menuViewport, spriteBatch);
+
+        menu = new Menu();
+        menu.setVisible(false);
+
+        menuStage.addActor(menu);
+    }
+
+    public void setMenuVisible(boolean visible)
+    {
+        Gdx.app.log("menu", "display");
+        menu.setVisible(visible);
+    }
+
+    public boolean isMenuVisible()
+    {
+        return menu.isVisible();
     }
 
     @Override
