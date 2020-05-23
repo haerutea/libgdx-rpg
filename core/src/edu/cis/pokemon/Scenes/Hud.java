@@ -1,4 +1,4 @@
-package Scenes;
+package edu.cis.pokemon.Scenes;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -7,14 +7,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.time.LocalDateTime;
 
-import Utils.PKMConstants;
+import edu.cis.pokemon.Utils.PKMConstants;
 
-public class Hud {
+public class Hud implements Disposable
+{
     public Stage stage;
     private Viewport viewport;
 
@@ -43,4 +45,9 @@ public class Hud {
         stage.addActor(table);
     }
 
+    @Override
+    public void dispose()
+    {
+        stage.dispose();
+    }
 }

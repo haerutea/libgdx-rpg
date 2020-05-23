@@ -1,19 +1,17 @@
-package Screens;
+package edu.cis.pokemon.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import Scenes.Hud;
-import Utils.PKMConstants;
+import edu.cis.pokemon.Scenes.Hud;
+import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Pokemon;
 
 public class GameScreen implements Screen {
@@ -33,8 +31,8 @@ public class GameScreen implements Screen {
         hud = new Hud(game.batch);
 
         mapLoader = new TmxMapLoader();
-//        map = mapLoader.load("map.tmx");
-//        renderer = new OrthogonalTiledMapRenderer(map);
+        map = mapLoader.load("new_town.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map);
 
         gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
     }
@@ -49,7 +47,7 @@ public class GameScreen implements Screen {
         handleInput(deltaTime);
         gameCam.update();
 
-//        renderer.setView(gameCam);
+        renderer.setView(gameCam);
 
     }
 
@@ -65,10 +63,15 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-//		renderer.render();
+		renderer.render();
+
+        game.batch.setProjectionMatrix(gameCam.combined);
+        game.batch.begin();
+        game.batch.end();
 
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
+
     }
 
     @Override
@@ -92,7 +95,10 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void dispose() {
-
+    public void dispose()
+    {
+        map.dispose();
+        renderer.dispose();
+        hud.dispose();
     }
 }

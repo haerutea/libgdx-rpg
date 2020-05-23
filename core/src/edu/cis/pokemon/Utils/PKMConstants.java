@@ -1,4 +1,4 @@
-package Utils;
+package edu.cis.pokemon.Utils;
 
 public class PKMConstants {
     //View ratios

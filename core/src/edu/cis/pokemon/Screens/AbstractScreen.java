@@ -1,4 +1,4 @@
-package Screens;
+package edu.cis.pokemon.Screens;
 
 import com.badlogic.gdx.Screen;
 
