@@ -41,7 +41,7 @@ public class Hud implements Disposable
 
         //dateTimeLabel = new Label(String.format( , ), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         dateTimeLabel = new Label("test weekday/time", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-
+        //TODO: change size
         table.top().right().padTop(10).padRight(10); //go to top right
         table.add(dateTimeLabel);
         table.row();
