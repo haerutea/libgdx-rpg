@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="8" height="8" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
+ <tileset firstgid="1" source="npc_house.tsx"/>
+ <layer id="1" name="background" width="8" height="8">
+  <data encoding="base64" compression="zlib">
+   eJwNwwVSAgEAAMCjOwQJ6ZKQBun8/6vYndlQEARhI0aNGTdh0pRpM2bNmbdg0S9Llv22YtWadX9s2LRl245de/YdOHTkr2MnTp3559yFS1eu3bh1595/Dx49efbi1Zt3Hz59+fYDzB4IIQ==
+  </data>
+ </layer>
+</map>

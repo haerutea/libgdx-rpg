@@ -88,7 +88,7 @@ public class GameScreen implements Screen {
         gameCam.position.y = player.box2Body.getPosition().y;
         gameCam.update();
 
-        //player.update(dt);
+        player.update(deltaTime);
 
         renderer.setView(gameCam);
 
@@ -120,10 +120,12 @@ public class GameScreen implements Screen {
         game.batch.end();
 
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+
 		if(hud.isMenuVisible())
         {
             hud.menuStage.draw();
         }
+
 		hud.stage.draw();
     }
 

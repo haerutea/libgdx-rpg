@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" group="libgdx-rpg/android" />
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" group="libgdx-rpg/core" />
+      <module fileurl="file://$PROJECT_DIR$/desktop/desktop.iml" filepath="$PROJECT_DIR$/desktop/desktop.iml" group="libgdx-rpg/desktop" />
+      <module fileurl="file://$PROJECT_DIR$/html/html.iml" filepath="$PROJECT_DIR$/html/html.iml" group="libgdx-rpg/html" />
+      <module fileurl="file://$PROJECT_DIR$/ios/ios.iml" filepath="$PROJECT_DIR$/ios/ios.iml" group="libgdx-rpg/ios" />
+      <module fileurl="file://$PROJECT_DIR$/libgdx-rpg.iml" filepath="$PROJECT_DIR$/libgdx-rpg.iml" group="libgdx-rpg" />
+    </modules>
+  </component>
+</project>

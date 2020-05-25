@@ -68,7 +68,7 @@ public class Player extends Sprite
 
         FixtureDef fixtureDef = PKMUtils.createGameFixture(this, box2Body, PKMConstants.BIT_PLAYER, collidesWith);
 
-        this.setBounds(150, 150, 16, 16);
+        this.setBounds(150 - getWidth() / 2, 150 - getHeight() / 2, 16, 16);
         this.setRegion(frontStand);
     }
 
@@ -118,12 +118,20 @@ public class Player extends Sprite
         }
     }
 
+    public void update(float dt)
+    {
+        setPosition(box2Body.getPosition().x - getWidth() / 2, box2Body.getPosition().y - getHeight() / 2);
+    }
+
     public void move()
     {
         if(currentState != State.STANDING)
         {
             if(currentDirection.getAxis().equals("x"))
             {
+                // this turns linear impulse into applyForce, there is a gradual change in the movement speed
+                // see https://www.iforce2d.net/b2dtut/forces which is in C++ but you get the idea
+                // switch statement here should work better
                 box2Body.applyLinearImpulse(new Vector2(currentDirection.getVelocity(), 0), box2Body.getWorldCenter(), true);
             }
             else if(currentDirection.getAxis().equals("y"))
