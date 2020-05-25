@@ -21,6 +21,8 @@ public class Player extends Sprite
 {
     private State currentState;
     private Direction currentDirection;
+    private boolean turnDirection;
+    private boolean facingRight;
 
     //TODO: IS A DIFF VAR FOR EACH DIRECTION/STATE NEEDED?
     private TextureAtlas.AtlasRegion playerRegion;
@@ -41,13 +43,11 @@ public class Player extends Sprite
         //starts off standing, facing front
         currentState = State.STANDING;
         currentDirection = Direction.FRONT;
+        turnDirection = false;
 
         playerRegion = screen.getAtlas().findRegion(PKMConstants.PLAYER_SPRITE);
         makeAnimations();
         defineBox2d();
-
-        setBounds(0, 0, 16, 16);
-        setRegion(frontStand);
     }
 
     public void defineBox2d()
@@ -67,14 +67,16 @@ public class Player extends Sprite
                 | PKMConstants.BIT_DOOR;
 
         FixtureDef fixtureDef = PKMUtils.createGameFixture(this, box2Body, PKMConstants.BIT_PLAYER, collidesWith);
-        setRegion(frontStand);
+
+        this.setBounds(150, 150, 16, 16);
+        this.setRegion(frontStand);
     }
 
     private void makeAnimations()
     {
-        frontStand = new TextureRegion(playerRegion, 2, 2, 16, 16);
-        backStand = new TextureRegion(playerRegion, 16, 0, 16, 16);
-        sideStand = new TextureRegion(playerRegion, 32, 0, 16, 16);
+        frontStand = new TextureRegion(playerRegion, PKMConstants.X_OFFSET, PKMConstants.Y_OFFSET, 16, 16);
+        backStand = new TextureRegion(playerRegion, 16 + PKMConstants.X_OFFSET, PKMConstants.Y_OFFSET, 16, 16);
+        sideStand = new TextureRegion(playerRegion, 32 + PKMConstants.X_OFFSET, PKMConstants.Y_OFFSET, 16, 16);
 
 //        Array<TextureRegion> frames = new Array<TextureRegion>(); //make sure to use the badlogic's Array
 //        frames.add(new TextureRegion(playerRegion, i * 16, 0, 16, 16));
@@ -90,11 +92,28 @@ public class Player extends Sprite
         switch(direction)
         {
             case FRONT:
-                Gdx.app.log("front", "works");
-                setRegion(frontStand);
+                this.setRegion(frontStand);
                 break;
             case BACK:
-                setRegion(backStand);
+               this.setRegion(backStand);
+                break;
+            case LEFT:
+                if(turnDirection)
+                {
+                    sideStand.flip(true, false);
+                    facingRight = false;
+                    turnDirection = false;
+                }
+                this.setRegion(sideStand);
+                break;
+            case RIGHT:
+                if(turnDirection)
+                {
+                    sideStand.flip(true, false);
+                    turnDirection = false;
+                    facingRight = true;
+                }
+                this.setRegion(sideStand);
                 break;
         }
     }
@@ -111,6 +130,7 @@ public class Player extends Sprite
             {
                 box2Body.applyLinearImpulse(new Vector2(0, currentDirection.getVelocity()), box2Body.getWorldCenter(), true);
             }
+                Gdx.app.log("x", "" + this.box2Body.getLocalCenter());
         }
     }
 
@@ -118,5 +138,15 @@ public class Player extends Sprite
     {
         currentState = State.STANDING;
         box2Body.setLinearVelocity(new Vector2(0, 0));
+    }
+
+    public boolean isFacingRight()
+    {
+        return facingRight;
+    }
+
+    public void setTurnDirection(boolean turnDirection)
+    {
+        this.turnDirection = turnDirection;
     }
 }
