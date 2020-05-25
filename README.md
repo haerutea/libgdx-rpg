@@ -3,6 +3,7 @@ Player (26th)
   - ~~screen follow player~~
   - interacting with things facing
   - ~~button movement~~
+  - grid movement
 
 Items
   - spawn (25th)
