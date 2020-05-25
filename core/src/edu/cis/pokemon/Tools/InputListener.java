@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
 
 import edu.cis.pokemon.Enums.Direction;
 import edu.cis.pokemon.Enums.State;
@@ -16,14 +15,12 @@ public class InputListener implements InputProcessor
 {
     private GameScreen screen;
     private Hud hud;
-    private OrthographicCamera gameCam;
     private Player player;
 
-    public InputListener(GameScreen screen, Hud hud, OrthographicCamera gameCam, Player player)
+    public InputListener(GameScreen screen, Hud hud, Player player)
     {
         this.screen = screen;
         this.hud = hud;
-        this.gameCam = gameCam;
         this.player = player;
     }
 
@@ -41,15 +38,22 @@ public class InputListener implements InputProcessor
                 player.changeSprite(Direction.BACK, State.RUNNING);
                 break;
             case Input.Keys.DOWN:
-                //forces can't be implemented here bcs it'll only apply for when key is first pressed down, apply force in main loop instead
                 player.changeSprite(Direction.FRONT, State.RUNNING);
                 break;
             case Input.Keys.LEFT:
-                //forces can't be implemented here bcs it'll only apply for when key is first pressed down, apply force in main loop instead
+                if(player.isFacingRight())
+                {
+                    player.setTurnDirection(true);
+                }
                 player.changeSprite(Direction.LEFT, State.RUNNING);
                 break;
             case Input.Keys.RIGHT:
-                //forces can't be implemented here bcs it'll only apply for when key is first pressed down, apply force in main loop instead
+                Gdx.app.log("right", "");
+                if(!player.isFacingRight())
+                {
+                    Gdx.app.log("not facing right", "");
+                    player.setTurnDirection(true);
+                }
                 player.changeSprite(Direction.RIGHT, State.RUNNING);
                 break;
         }
