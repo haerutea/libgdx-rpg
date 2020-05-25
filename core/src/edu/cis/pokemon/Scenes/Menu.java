@@ -22,7 +22,7 @@ public class Menu extends Actor
     public void draw(Batch batch, float parentAlpha)
     {
         super.draw(batch, parentAlpha);
-        batch.draw(region, 220, 200, region.getRegionWidth(),
-                region.getRegionHeight());
+        batch.draw(region, 0, 0, region.getRegionWidth(),
+                region.getRegionHeight()); //TODO: change size
     }
 }
