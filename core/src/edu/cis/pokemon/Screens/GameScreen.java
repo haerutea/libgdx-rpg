@@ -9,11 +9,16 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import edu.cis.pokemon.InputListener;
+import edu.cis.pokemon.Tools.Box2dWorldCreator;
+import edu.cis.pokemon.Tools.InputListener;
 import edu.cis.pokemon.Scenes.Hud;
+import edu.cis.pokemon.Sprites.Player;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Pokemon;
 
@@ -29,7 +34,13 @@ public class GameScreen implements Screen {
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
-    private InputListener inputListener;
+    //Box2D variables
+    private World world;
+    private Box2DDebugRenderer b2dr; //gives graphical representation of bodies in box2d world
+    private Box2dWorldCreator box2dCreator;
+
+    //sprites
+    private Player player;
 
     public GameScreen(Pokemon game) {
         this.game = game;
@@ -37,16 +48,22 @@ public class GameScreen implements Screen {
 
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(PKMConstants.V_WIDTH, PKMConstants.V_HEIGHT, gameCam);
+        gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
         hud = new Hud(game.batch);
-
-        Gdx.input.setInputProcessor(new InputListener(this, hud,
-                gameCam));
 
         mapLoader = new TmxMapLoader();
         map = mapLoader.load(PKMConstants.MAP_FILENAME);
+
         renderer = new OrthogonalTiledMapRenderer(map);
 
-        gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
+        world = new World(new Vector2(0, 0), true); //sleep objects that are at rest, therefore not calculating
+        b2dr = new Box2DDebugRenderer();
+        box2dCreator = new Box2dWorldCreator(this);
+
+        player = new Player(world, this);
+        Gdx.input.setInputProcessor(new InputListener(this, hud, gameCam, player));
+
+
     }
 
     public void handleInput(float deltaTime) {
@@ -55,9 +72,16 @@ public class GameScreen implements Screen {
         }
     }
 
+
     public void update(float deltaTime) {
         handleInput(deltaTime);
+
+        world.step(PKMConstants.FPS, PKMConstants.V_ITER, PKMConstants.P_ITER);
+        gameCam.position.x = player.box2Body.getPosition().x;
+        gameCam.position.y = player.box2Body.getPosition().y;
         gameCam.update();
+
+        //player.update(dt);
 
         renderer.setView(gameCam);
 
@@ -77,8 +101,16 @@ public class GameScreen implements Screen {
 
 		renderer.render();
 
-        game.batch.setProjectionMatrix(gameCam.combined);
+        //game.batch.setProjectionMatrix(gameCam.combined);
+
+        b2dr.render(world, gameCam.combined);
+
         game.batch.begin();
+
+        game.batch.draw(player, player.getX(), player.getY());
+
+        player.draw(game.batch);
+        player.move();
         game.batch.end();
 
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -120,5 +152,20 @@ public class GameScreen implements Screen {
     public TextureAtlas getAtlas()
     {
         return atlas;
+    }
+
+    public Hud getHud()
+    {
+        return hud;
+    }
+
+    public TiledMap getMap()
+    {
+        return map;
+    }
+
+    public World getWorld()
+    {
+        return world;
     }
 }
