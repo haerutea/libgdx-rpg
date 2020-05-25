@@ -65,18 +65,18 @@ public class GameScreen implements Screen {
     }
 
     public void handleInput(float deltaTime) {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-            gameCam.position.x += 2000 * deltaTime; //TODO: temp
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-            gameCam.position.x -= 2000 * deltaTime; //TODO: temp
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-            gameCam.position.y += 2000 * deltaTime; //TODO: temp
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-            gameCam.position.y -= 2000 * deltaTime; //TODO: temp
-        }
+//        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+//            gameCam.position.x += 2000 * deltaTime; //TODO: temp
+//        }
+//        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+//            gameCam.position.x -= 2000 * deltaTime; //TODO: temp
+//        }
+//        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+//            gameCam.position.y += 2000 * deltaTime; //TODO: temp
+//        }
+//        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+//            gameCam.position.y -= 2000 * deltaTime; //TODO: temp
+//        }
     }
 
 
