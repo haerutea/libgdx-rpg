@@ -61,9 +61,7 @@ public class GameScreen implements Screen {
         box2dCreator = new Box2dWorldCreator(this);
 
         player = new Player(world, this);
-        Gdx.input.setInputProcessor(new InputListener(this, hud, gameCam, player));
-
-
+        Gdx.input.setInputProcessor(new InputListener(this, hud, player));
     }
 
     public void handleInput(float deltaTime) {
@@ -101,16 +99,15 @@ public class GameScreen implements Screen {
 
 		renderer.render();
 
-        //game.batch.setProjectionMatrix(gameCam.combined);
+        game.batch.setProjectionMatrix(gameCam.combined);
 
         b2dr.render(world, gameCam.combined);
 
         game.batch.begin();
 
-        game.batch.draw(player, player.getX(), player.getY());
-
-        player.draw(game.batch);
         player.move();
+        player.draw(game.batch);
+
         game.batch.end();
 
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
