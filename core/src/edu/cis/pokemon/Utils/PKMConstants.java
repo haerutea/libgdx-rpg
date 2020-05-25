@@ -2,8 +2,8 @@ package edu.cis.pokemon.Utils;
 
 public class PKMConstants {
     //View ratios
-    public static final int V_HEIGHT = 500; //arbitrary numbers
-    public static final int V_WIDTH = 500;
+    public static final int V_HEIGHT = 9 * 16; //arbitrary numbers
+    public static final int V_WIDTH = 11 * 16;
 
     //atlas file name
     public static final String ATLAS_FILENAME = "player.atlas";
