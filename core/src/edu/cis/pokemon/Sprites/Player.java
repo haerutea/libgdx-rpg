@@ -130,7 +130,7 @@ public class Player extends Sprite
             {
                 box2Body.applyLinearImpulse(new Vector2(0, currentDirection.getVelocity()), box2Body.getWorldCenter(), true);
             }
-                Gdx.app.log("x", "" + this.box2Body.getLocalCenter());
+            Gdx.app.log("x", "" + this.getX());
         }
     }
 
