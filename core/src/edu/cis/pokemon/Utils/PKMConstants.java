@@ -23,6 +23,7 @@ public class PKMConstants {
     public static final String MENU_FILENAME = "badlogic.jpg";
     //animation sprites
     public static final String PLAYER_SPRITE = "player";
+    public static final String ITEM_SPRITE = "item";
     //x and y offset for sprites
     public static final int X_OFFSET = 0;
     public static final int Y_OFFSET = 0;
@@ -41,4 +42,5 @@ public class PKMConstants {
     public static final short BIT_ITEM = 32;
     public static final short BIT_DOOR = 64;
     public static final short BIT_TRAINER = 128;
+    public static final short BIT_PLAYER_FACE = 256;
 }

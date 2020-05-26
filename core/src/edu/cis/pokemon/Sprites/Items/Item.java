@@ -11,10 +11,11 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 import edu.cis.pokemon.Screens.GameScreen;
+import edu.cis.pokemon.Sprites.Interactable;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Utils.PKMUtils;
 
-public class Item extends Sprite {
+public class Item extends Sprite implements Interactable {
     public World world;
     public Body box2Body;
     protected boolean setToDestroy;
@@ -26,9 +27,7 @@ public class Item extends Sprite {
         this.world = screen.getWorld();
         setPosition(x, y);
         defineItem();
-        itemRegion = screen.getAtlas().findRegion(PKMConstants.PLAYER_SPRITE);
-        //TextureRegion image =  new TextureRegion(itemRegion, 16*16 + PKMConstants.X_OFFSET, 8*16 + PKMConstants.Y_OFFSET, 16, 16);
-        //TODO: change to item image, can't find it within the atlas
+        itemRegion = screen.getAtlas().findRegion(PKMConstants.ITEM_SPRITE);
         TextureRegion image =  new TextureRegion(itemRegion, PKMConstants.X_OFFSET, PKMConstants.Y_OFFSET, 16, 16);
         setRegion(image);
 
@@ -66,5 +65,10 @@ public class Item extends Sprite {
         }
     }
 
-    public String interactionDialog() {return "";};
+    @Override
+    public void interact() {
+        //dialog: you found _____!
+        setToDestroy = true; //remove texture
+        //add to bag
+    }
 }
