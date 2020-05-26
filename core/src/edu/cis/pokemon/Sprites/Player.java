@@ -88,7 +88,6 @@ public class Player extends Sprite
 
     public void changeSprite(Direction direction, State state)
     {
-        Gdx.app.log("changeSprite", "works");
         currentDirection = direction;
         currentState = state;
         switch(direction)
@@ -140,7 +139,6 @@ public class Player extends Sprite
             {
                 box2Body.applyLinearImpulse(new Vector2(0, currentDirection.getVelocity()), box2Body.getWorldCenter(), true);
             }
-            Gdx.app.log("x", "" + this.getX());
         }
     }
 

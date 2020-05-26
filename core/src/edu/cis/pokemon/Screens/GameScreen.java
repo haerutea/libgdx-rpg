@@ -20,6 +20,8 @@ import edu.cis.pokemon.Tools.Box2dWorldCreator;
 import edu.cis.pokemon.Tools.InputListener;
 import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Sprites.Player;
+import edu.cis.pokemon.Tools.InteractionProcessor;
+import edu.cis.pokemon.Tools.WorldContactListener;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Pokemon;
 
@@ -43,6 +45,9 @@ public class GameScreen implements Screen {
     //sprites
     private Player player;
 
+    //interaction
+    private InteractionProcessor interactionProcessor;
+
     public GameScreen(Pokemon game) {
         this.game = game;
         atlas = new TextureAtlas(PKMConstants.ATLAS_FILENAME);
@@ -62,7 +67,10 @@ public class GameScreen implements Screen {
         box2dCreator = new Box2dWorldCreator(this);
 
         player = new Player(world, this);
-        Gdx.input.setInputProcessor(new InputListener(this, hud, player));
+
+        interactionProcessor = new InteractionProcessor();
+        Gdx.input.setInputProcessor(new InputListener(this, hud, player, interactionProcessor));
+        world.setContactListener(new WorldContactListener(interactionProcessor));
     }
 
     public void handleInput(float deltaTime) {

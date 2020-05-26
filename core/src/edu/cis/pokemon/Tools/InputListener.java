@@ -3,7 +3,6 @@ package edu.cis.pokemon.Tools;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import edu.cis.pokemon.Enums.Direction;
 import edu.cis.pokemon.Enums.State;
@@ -16,12 +15,14 @@ public class InputListener implements InputProcessor
     private GameScreen screen;
     private Hud hud;
     private Player player;
+    private InteractionProcessor interactionProcessor;
 
-    public InputListener(GameScreen screen, Hud hud, Player player)
+    public InputListener(GameScreen screen, Hud hud, Player player, InteractionProcessor interProcessor)
     {
         this.screen = screen;
         this.hud = hud;
         this.player = player;
+        this.interactionProcessor = interProcessor;
     }
 
     @Override
@@ -48,14 +49,16 @@ public class InputListener implements InputProcessor
                 player.changeSprite(Direction.LEFT, State.RUNNING);
                 break;
             case Input.Keys.RIGHT:
-                Gdx.app.log("right", "");
                 if(!player.isFacingRight())
                 {
-                    Gdx.app.log("not facing right", "");
                     player.setTurnDirection(true);
                 }
                 player.changeSprite(Direction.RIGHT, State.RUNNING);
                 break;
+            case Input.Keys.ENTER:
+                //TODO: CHANGE THIS TO CALL A PROCESS METHOD IN INTERACTION PROCESSOR?
+                Gdx.app.log("object: " , "" + interactionProcessor.getCollidedObject());
+
         }
         return true;
     }
