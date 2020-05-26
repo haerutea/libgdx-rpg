@@ -1,9 +1,9 @@
 # Pokemon game
 Player (26th)
   - ~~screen follow player~~
-  - interacting with things facing
+  - ~~interacting with things facing~~
   - ~~button movement~~
-  - grid movement
+  - grid movement (POSSIBLE FEATURE TO ADD?  NOT CRUICIAL)
 
 Items
   - spawn (25th)
