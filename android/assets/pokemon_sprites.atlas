@@ -1,0 +1,48 @@
+
+pokemon_sprites.png
+size: 512,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+female
+  rotate: false
+  xy: 100, 2
+  size: 96, 16
+  orig: 96, 16
+  offset: 0, 0
+  index: -1
+item
+  rotate: false
+  xy: 492, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+male
+  rotate: false
+  xy: 198, 2
+  size: 96, 16
+  orig: 96, 16
+  offset: 0, 0
+  index: -1
+mother
+  rotate: false
+  xy: 2, 2
+  size: 96, 16
+  orig: 96, 16
+  offset: 0, 0
+  index: -1
+player
+  rotate: false
+  xy: 296, 2
+  size: 96, 16
+  orig: 96, 16
+  offset: 0, 0
+  index: -1
+professor
+  rotate: false
+  xy: 394, 2
+  size: 96, 16
+  orig: 96, 16
+  offset: 0, 0
+  index: -1

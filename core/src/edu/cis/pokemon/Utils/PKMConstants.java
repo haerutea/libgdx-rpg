@@ -6,7 +6,7 @@ public class PKMConstants {
     public static final int V_WIDTH = 11 * 16;
 
     //atlas file name
-    public static final String ATLAS_FILENAME = "sprites.atlas";
+    public static final String ATLAS_FILENAME = "pokemon_sprites.atlas";
     //map file name
     public static final String MAP_FILENAME = "new_town.tmx";
 
@@ -22,10 +22,10 @@ public class PKMConstants {
     //menu image file name
     public static final String MENU_FILENAME = "badlogic.jpg";
     //animation sprites
-    public static final String PLAYER_SPRITE = "trainers";
+    public static final String PLAYER_SPRITE = "player";
     //x and y offset for sprites
-    public static final int X_OFFSET = 4;
-    public static final int Y_OFFSET = 4;
+    public static final int X_OFFSET = 0;
+    public static final int Y_OFFSET = 0;
 
     //graphics
     public static final float FPS = 1/60f;
