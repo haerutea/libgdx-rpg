@@ -9,13 +9,17 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Screens.GameScreen;
+import edu.cis.pokemon.Sprites.Items.Item;
 import edu.cis.pokemon.Utils.PKMConstants;
 
 public class Box2dWorldCreator
 {
+    private Array<Item> items;
+
     public Box2dWorldCreator(GameScreen screen)
     {
         BodyDef bodyDef = new BodyDef();
@@ -107,20 +111,11 @@ public class Box2dWorldCreator
         }
 
         //items
-        //TODO: CHANGE TO MAKE new Item() INSTEAD
+        items = new Array<>();
         for(MapObject object : map.getLayers().get(PKMConstants.ITEMS).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
-
-            body = world.createBody(bodyDef);
-
-            polyShape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fixtureDef.shape = polyShape;
-            fixtureDef.filter.categoryBits = PKMConstants.BIT_ITEM;
-
-            body.createFixture(fixtureDef);
+            items.add(new Item(screen, rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2));
         }
 
         //trainers
@@ -139,5 +134,9 @@ public class Box2dWorldCreator
 
             body.createFixture(fixtureDef);
         }
+    }
+
+    public Array<Item> getItems() {
+        return items;
     }
 }

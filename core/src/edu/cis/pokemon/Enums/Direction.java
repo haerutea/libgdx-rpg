@@ -2,10 +2,10 @@ package edu.cis.pokemon.Enums;
 
 public enum Direction
 {
-    FRONT(-1, "y"),
-    BACK(1, "y"),
-    LEFT(-1, "x"),
-    RIGHT(1, "x");
+    FRONT(-100, "y"),
+    BACK(100, "y"),
+    LEFT(-100, "x"),
+    RIGHT(100, "x");
 
     int velocity;
     String axis;

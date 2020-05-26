@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import edu.cis.pokemon.Sprites.Items.Item;
 import edu.cis.pokemon.Tools.Box2dWorldCreator;
 import edu.cis.pokemon.Tools.InputListener;
 import edu.cis.pokemon.Scenes.Hud;
@@ -65,16 +66,16 @@ public class GameScreen implements Screen {
     }
 
     public void handleInput(float deltaTime) {
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+//        if(Gdx.input.isKeyJustPressed(Input.Keys.D)) {
 //            gameCam.position.x += 2000 * deltaTime; //TODO: temp
 //        }
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+//        if(Gdx.input.isKeyJustPressed(Input.Keys.A)) {
 //            gameCam.position.x -= 2000 * deltaTime; //TODO: temp
 //        }
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+//        if(Gdx.input.isKeyJustPressed(Input.Keys.W)) {
 //            gameCam.position.y += 2000 * deltaTime; //TODO: temp
 //        }
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+//        if(Gdx.input.isKeyJustPressed(Input.Keys.S)) {
 //            gameCam.position.y -= 2000 * deltaTime; //TODO: temp
 //        }
     }
@@ -89,6 +90,10 @@ public class GameScreen implements Screen {
         gameCam.update();
 
         player.update(deltaTime);
+
+        for(Item item : box2dCreator.getItems()) {
+            item.update(deltaTime);
+        }
 
         renderer.setView(gameCam);
 
@@ -116,6 +121,10 @@ public class GameScreen implements Screen {
 
         player.move();
         player.draw(game.batch);
+
+        for(Item item : box2dCreator.getItems()) {
+            item.draw(game.batch);
+        }
 
         game.batch.end();
 

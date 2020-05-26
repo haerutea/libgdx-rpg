@@ -65,6 +65,7 @@ public class Player extends Sprite
                 | PKMConstants.BIT_ITEM
                 | PKMConstants.BIT_GRASS
                 | PKMConstants.BIT_DOOR;
+//        short collidesWith = PKMConstants.BIT_ITEM;
 
         FixtureDef fixtureDef = PKMUtils.createGameFixture(this, box2Body, PKMConstants.BIT_PLAYER, collidesWith);
 
