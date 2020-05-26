@@ -8,9 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 import edu.cis.pokemon.Enums.Direction;
 import edu.cis.pokemon.Enums.State;
@@ -21,9 +21,11 @@ import edu.cis.pokemon.Utils.PKMUtils;
 public class Player extends Sprite
 {
     private State currentState;
+    private State previousState;
     private Direction currentDirection;
     private boolean turnDirection;
     private boolean facingRight;
+    private float stateTimer;
 
     //TODO: IS A DIFF VAR FOR EACH DIRECTION/STATE NEEDED?
     private TextureAtlas.AtlasRegion playerRegion;
@@ -43,7 +45,9 @@ public class Player extends Sprite
         this.world = world;
         //starts off standing, facing front
         currentState = State.STANDING;
+        previousState = State.STANDING;
         currentDirection = Direction.FRONT;
+        stateTimer = 0;
         turnDirection = false;
 
         playerRegion = screen.getAtlas().findRegion(PKMConstants.PLAYER_SPRITE);
@@ -76,27 +80,75 @@ public class Player extends Sprite
 
     private void makeAnimations()
     {
-        frontStand = new TextureRegion(playerRegion, PKMConstants.X_OFFSET, PKMConstants.Y_OFFSET, 16, 16);
-        backStand = new TextureRegion(playerRegion, 16 + PKMConstants.X_OFFSET, PKMConstants.Y_OFFSET, 16, 16);
-        sideStand = new TextureRegion(playerRegion, 32 + PKMConstants.X_OFFSET, PKMConstants.Y_OFFSET, 16, 16);
+        frontStand = new TextureRegion(playerRegion,0, 0, 16, 16);
+        backStand = new TextureRegion(playerRegion, 16, 0, 16, 16);
+        sideStand = new TextureRegion(playerRegion, 32, 0, 16, 16);
 
-//        Array<TextureRegion> frames = new Array<TextureRegion>(); //make sure to use the badlogic's Array
-//        frames.add(new TextureRegion(playerRegion, i * 16, 0, 16, 16));
-//        frontWalk = new Animation<>(0.1f, frames);
-//        frames.clear();
+        //TODO: MAYBE FIX THE AMOUNT OF REPEATED CODE HERE?
+        //front walk
+        Array<TextureRegion> frames = new Array<TextureRegion>(); //make sure to use the badlogic's Array
+        TextureRegion otherSideWalk = new TextureRegion(playerRegion, 48, 0, 16, 16);
+        otherSideWalk.flip(true, false);
+
+        frames.add(new TextureRegion(playerRegion, 48, 0, 16, 16)); //for some reason if I don't do this, the flip doesn't work?
+        frames.add(frontStand);
+        frames.add(otherSideWalk);
+        frames.add(frontStand);
+
+        frontWalk = new Animation<>(PKMConstants.PLAYER_WALK_SPEED, frames);
+        frames.clear();
+
+        //back walk
+        otherSideWalk = new TextureRegion(playerRegion, 64, 0, 16, 16);
+        otherSideWalk.flip(true, false);
+
+        frames.add(new TextureRegion(playerRegion, 64, 0, 16, 16));
+        frames.add(backStand);
+        frames.add(otherSideWalk);
+        frames.add(backStand);
+
+        backWalk = new Animation<>(PKMConstants.PLAYER_WALK_SPEED, frames);
+        frames.clear();
+
+        //left walk
+        otherSideWalk = new TextureRegion(playerRegion, 80, 0, 16, 16);
+        otherSideWalk.flip(true, false);
+        frames.add(new TextureRegion(playerRegion, 80, 0, 16, 16));
+        frames.add(sideStand);
+        leftWalk = new Animation<>(PKMConstants.PLAYER_WALK_SPEED, frames);
+        frames.clear();
+
+        //right walk
+        frames.add(otherSideWalk);
+        frames.add(sideStand);
+        rightWalk = new Animation<>(PKMConstants.PLAYER_WALK_SPEED, frames);
+        frames.clear();
     }
 
-    public void changeSprite(Direction direction, State state)
+    public void changeSprite(float dt)
     {
-        currentDirection = direction;
-        currentState = state;
-        switch(direction)
+        switch(currentDirection)
         {
             case FRONT:
-                this.setRegion(frontStand);
+                if(currentState == State.STANDING)
+                {
+                    this.setRegion(frontStand);
+                }
+                else if(currentState == State.RUNNING)
+                {
+                    Gdx.app.log("is", "running");
+                    this.setRegion(frontWalk.getKeyFrame(stateTimer, true));
+                }
                 break;
             case BACK:
-               this.setRegion(backStand);
+                if(currentState == State.STANDING)
+                {
+                    this.setRegion(backStand);
+                }
+                else if(currentState == State.RUNNING)
+                {
+                    this.setRegion(backWalk.getKeyFrame(stateTimer, true));
+                }
                 break;
             case LEFT:
                 if(turnDirection)
@@ -105,7 +157,14 @@ public class Player extends Sprite
                     facingRight = false;
                     turnDirection = false;
                 }
-                this.setRegion(sideStand);
+                if(currentState == State.STANDING)
+                {
+                    this.setRegion(sideStand);
+                }
+                else if(currentState == State.RUNNING)
+                {
+                    this.setRegion(leftWalk.getKeyFrame(stateTimer, true));
+                }
                 break;
             case RIGHT:
                 if(turnDirection)
@@ -114,14 +173,24 @@ public class Player extends Sprite
                     turnDirection = false;
                     facingRight = true;
                 }
-                this.setRegion(sideStand);
+                if(currentState == State.STANDING)
+                {
+                    this.setRegion(sideStand);
+                }
+                else if(currentState == State.RUNNING)
+                {
+                    this.setRegion(rightWalk.getKeyFrame(stateTimer, true));
+                }
                 break;
         }
+        stateTimer = currentState == previousState ? stateTimer + dt : 0;
+        previousState = currentState;
     }
 
     public void update(float dt)
     {
         setPosition(box2Body.getPosition().x - getWidth() / 2, box2Body.getPosition().y - getHeight() / 2);
+        changeSprite(dt);
     }
 
     public void move()
@@ -156,5 +225,25 @@ public class Player extends Sprite
     public void setTurnDirection(boolean turnDirection)
     {
         this.turnDirection = turnDirection;
+    }
+
+    public State getState()
+    {
+        return currentState;
+    }
+
+    public void setState(State currentState)
+    {
+        this.currentState = currentState;
+    }
+
+    public Direction getDirection()
+    {
+        return currentDirection;
+    }
+
+    public void setDirection(Direction currentDirection)
+    {
+        this.currentDirection = currentDirection;
     }
 }

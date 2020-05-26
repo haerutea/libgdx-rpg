@@ -21,12 +21,13 @@ public class PKMConstants {
 
     //menu image file name
     public static final String MENU_FILENAME = "badlogic.jpg";
+
     //animation sprites
     public static final String PLAYER_SPRITE = "player";
     public static final String ITEM_SPRITE = "item";
-    //x and y offset for sprites
-    public static final int X_OFFSET = 0;
-    public static final int Y_OFFSET = 0;
+
+    //walk animation frame duration
+    public static final float PLAYER_WALK_SPEED = 0.23f;
 
     //graphics
     public static final float FPS = 1/60f;

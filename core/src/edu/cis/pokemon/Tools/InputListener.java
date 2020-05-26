@@ -36,24 +36,28 @@ public class InputListener implements InputProcessor
                 break;
             case Input.Keys.UP:
                 //forces can't be implemented here bcs it'll only apply for when key is first pressed down, apply force in main loop instead
-                player.changeSprite(Direction.BACK, State.RUNNING);
+                player.setDirection(Direction.BACK);
+                player.setState(State.RUNNING);
                 break;
             case Input.Keys.DOWN:
-                player.changeSprite(Direction.FRONT, State.RUNNING);
+                player.setDirection(Direction.FRONT);
+                player.setState(State.RUNNING);
                 break;
             case Input.Keys.LEFT:
                 if(player.isFacingRight())
                 {
                     player.setTurnDirection(true);
                 }
-                player.changeSprite(Direction.LEFT, State.RUNNING);
+                player.setDirection(Direction.LEFT);
+                player.setState(State.RUNNING);
                 break;
             case Input.Keys.RIGHT:
                 if(!player.isFacingRight())
                 {
                     player.setTurnDirection(true);
                 }
-                player.changeSprite(Direction.RIGHT, State.RUNNING);
+                player.setDirection(Direction.RIGHT);
+                player.setState(State.RUNNING);
                 break;
             case Input.Keys.ENTER:
                 //TODO: CHANGE THIS TO CALL A PROCESS METHOD IN INTERACTION PROCESSOR?
