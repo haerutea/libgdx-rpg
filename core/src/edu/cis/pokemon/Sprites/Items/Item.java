@@ -28,7 +28,7 @@ public class Item extends Sprite implements Interactable {
         setPosition(x, y);
         defineItem();
         itemRegion = screen.getAtlas().findRegion(PKMConstants.ITEM_SPRITE);
-        TextureRegion image =  new TextureRegion(itemRegion, PKMConstants.X_OFFSET, PKMConstants.Y_OFFSET, 16, 16);
+        TextureRegion image = new TextureRegion(itemRegion, 0, 0, 16, 16);
         setRegion(image);
 
         setBounds(getX(), getY(), 16, 16);
