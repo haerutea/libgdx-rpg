@@ -69,7 +69,7 @@ public class GameScreen implements Screen {
 
         player = new Player(world, this);
 
-        interactionProcessor = new InteractionProcessor();
+        interactionProcessor = InteractionProcessor.getInstance();
         Gdx.input.setInputProcessor(new InputListener(this, hud, player, interactionProcessor));
         world.setContactListener(new WorldContactListener(interactionProcessor));
     }
