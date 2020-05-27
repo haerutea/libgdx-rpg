@@ -45,7 +45,6 @@ public class Hud implements Disposable
         table.top().right().padTop(10).padRight(10); //go to top right
         table.add(dateTimeLabel);
         table.row();
-
         stage.addActor(table);
 
         menuViewport = new FitViewport(PKMConstants.V_WIDTH, PKMConstants.V_HEIGHT, new OrthographicCamera());
@@ -55,6 +54,7 @@ public class Hud implements Disposable
         menu.setVisible(false);
 
         menuStage.addActor(menu);
+        //menuStage.addActor(new Label("work pls", new Label.LabelStyle(new BitmapFont(), Color.WHITE)));
     }
 
     public void setMenuVisible(boolean visible)
