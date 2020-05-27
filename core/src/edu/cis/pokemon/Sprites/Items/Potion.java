@@ -11,10 +11,19 @@ import edu.cis.pokemon.Screens.GameScreen;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Utils.PKMUtils;
 
-public class Potion extends Item {
-    private int health = 20;
+public class Potion implements Consumable {
+    private int health;
 
-    public Potion(GameScreen screen, float x, float y) {
-        super(screen, x, y);
+    public Potion() {
+        health = 20;
+    }
+
+    @Override
+    public void use() {
+
+    }
+
+    public int getHealth() {
+        return health;
     }
 }

@@ -1,9 +1,13 @@
 package edu.cis.pokemon.Sprites.Items;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -20,12 +24,16 @@ public class Item extends Sprite implements Interactable {
     public Body box2Body;
     protected boolean setToDestroy;
     protected boolean destroyed;
+    private MapObject mapObject;
 
     private TextureAtlas.AtlasRegion itemRegion;
 
-    public Item(GameScreen screen, float x, float y) {
+    public Item(GameScreen screen, MapObject mapObject) {
         this.world = screen.getWorld();
-        setPosition(x, y);
+        this.mapObject = mapObject;
+        Rectangle rect = ((RectangleMapObject) mapObject).getRectangle();
+        setPosition(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+
         defineItem();
         itemRegion = screen.getAtlas().findRegion(PKMConstants.ITEM_SPRITE);
         TextureRegion image = new TextureRegion(itemRegion, 0, 0, 16, 16);
@@ -66,9 +74,17 @@ public class Item extends Sprite implements Interactable {
     }
 
     @Override
-    public void interact() {
-        //dialog: you found _____!
+    public void interact(Object object) {
+        if(mapObject.getProperties().containsKey(PKMConstants.PROPERTY_POKEBALL)) {
+            //dialog: you found _____!
+            //add to bag
+        }
+        if(mapObject.getProperties().containsKey(PKMConstants.PROPERTY_POTION)) {
+            //dialog: you found _____!
+            Gdx.app.log("found:", PKMConstants.STRING_FOUND_POTION);
+            //add to bag
+
+        }
         setToDestroy = true; //remove texture
-        //add to bag
     }
 }

@@ -15,7 +15,7 @@ public class PKMUtils
         fixtureDef.filter.categoryBits = fixtureBit;
         fixtureDef.filter.maskBits = canCollideWith;
 
-        polyShape.setAsBox(7, 7); //change values so it fills up whole space?
+        polyShape.setAsBox(8, 8); //change values so it fills up whole space?
         fixtureDef.shape = polyShape;
         box2Body.createFixture(fixtureDef).setUserData(userData);
 
@@ -31,5 +31,20 @@ public class PKMUtils
 //        box2Body.createFixture(fixtureDef).setUserData(userData);
 //
 //        return fixtureDef;
+    }
+
+    public static FixtureDef createPlayerFixture(Object userData, Body box2Body, short fixtureBit, short canCollideWith)
+    {
+        PolygonShape polyShape = new PolygonShape();
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.filter.categoryBits = fixtureBit;
+        fixtureDef.filter.maskBits = canCollideWith;
+
+        polyShape.setAsBox(7, 7); //change values so it fills up whole space?
+        fixtureDef.shape = polyShape;
+        box2Body.createFixture(fixtureDef).setUserData(userData);
+
+        return fixtureDef;
     }
 }

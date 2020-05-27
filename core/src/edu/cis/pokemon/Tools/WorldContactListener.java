@@ -44,7 +44,18 @@ public class WorldContactListener implements ContactListener
                     Gdx.app.log("item is", "fixA");
                     interactionProcessor.setCollidedObject(fixA.getUserData());
                 }
-
+            case PKMConstants.BIT_PLAYER | PKMConstants.BIT_DOOR:
+                Gdx.app.log("door", "collided");
+                if(fixA.getFilterData().categoryBits == PKMConstants.BIT_PLAYER) //if fixA == Player
+                {
+                    Gdx.app.log("door is", "fixB");
+                    interactionProcessor.setCollidedObject(fixB.getUserData());
+                }
+                else
+                {
+                    Gdx.app.log("door is", "fixA");
+                    interactionProcessor.setCollidedObject(fixA.getUserData());
+                }
 
         }
     }

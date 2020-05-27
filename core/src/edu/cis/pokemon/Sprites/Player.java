@@ -67,12 +67,12 @@ public class Player extends Sprite
                 PKMConstants.BIT_IMPASSIBLE
                 | PKMConstants.BIT_SIGN
                 | PKMConstants.BIT_LEDGE
+//                | PKMConstants.BIT_DOOR
                 | PKMConstants.BIT_ITEM
-                | PKMConstants.BIT_GRASS
-                | PKMConstants.BIT_DOOR;
+                | PKMConstants.BIT_GRASS;
 //        short collidesWith = PKMConstants.BIT_ITEM;
 
-        FixtureDef fixtureDef = PKMUtils.createGameFixture(this, box2Body, PKMConstants.BIT_PLAYER, collidesWith);
+        FixtureDef fixtureDef = PKMUtils.createPlayerFixture(this, box2Body, PKMConstants.BIT_PLAYER, collidesWith);
 
         this.setBounds(150 - getWidth() / 2, 150 - getHeight() / 2, 16, 16);
         this.setRegion(frontStand);

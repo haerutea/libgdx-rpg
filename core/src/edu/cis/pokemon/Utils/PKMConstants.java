@@ -10,6 +10,14 @@ public class PKMConstants {
     //map file name
     public static final String MAP_FILENAME = "new_town.tmx";
 
+    //dialog
+    public static final String STRING_FOUND_POTION = "you found a potion!";
+    public static final String STRING_FOUND_POKEBALL = "you found a pokeball!";
+
+    //map object properties
+    public static final String PROPERTY_POTION = "potion";
+    public static final String PROPERTY_POKEBALL = "pokeball";
+
     //map layer indexes
     public static final int ENVIRONMENT = 1;
     public static final int GRASS = 2;

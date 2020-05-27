@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import edu.cis.pokemon.Sprites.Environment.Door;
 import edu.cis.pokemon.Sprites.Items.Item;
 import edu.cis.pokemon.Tools.Box2dWorldCreator;
 import edu.cis.pokemon.Tools.InputListener;
@@ -103,6 +104,10 @@ public class GameScreen implements Screen {
             item.update(deltaTime);
         }
 
+        for(Door door : box2dCreator.getDoors()) {
+            door.update(deltaTime);
+        }
+
         renderer.setView(gameCam);
 
     }
@@ -132,6 +137,10 @@ public class GameScreen implements Screen {
 
         for(Item item : box2dCreator.getItems()) {
             item.draw(game.batch);
+        }
+
+        for(Door door : box2dCreator.getDoors()) {
+            door.draw(game.batch);
         }
 
         game.batch.end();

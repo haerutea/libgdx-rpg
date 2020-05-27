@@ -13,12 +13,14 @@ import com.badlogic.gdx.utils.Array;
 
 import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Screens.GameScreen;
+import edu.cis.pokemon.Sprites.Environment.Door;
 import edu.cis.pokemon.Sprites.Items.Item;
 import edu.cis.pokemon.Utils.PKMConstants;
 
 public class Box2dWorldCreator
 {
     private Array<Item> items;
+    private Array<Door> doors;
 
     public Box2dWorldCreator(GameScreen screen)
     {
@@ -79,19 +81,22 @@ public class Box2dWorldCreator
         }
 
         //door
+        doors = new Array<>();
         for(MapObject object : map.getLayers().get(PKMConstants.DOORS).getObjects().getByType(RectangleMapObject.class))
         {
+//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//            bodyDef.type = BodyDef.BodyType.StaticBody;
+//            bodyDef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
+//
+//            body = world.createBody(bodyDef);
+//
+//            polyShape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
+//            fixtureDef.shape = polyShape;
+//            fixtureDef.filter.categoryBits = PKMConstants.BIT_DOOR;
+//
+//            body.createFixture(fixtureDef);
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
-
-            body = world.createBody(bodyDef);
-
-            polyShape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fixtureDef.shape = polyShape;
-            fixtureDef.filter.categoryBits = PKMConstants.BIT_DOOR;
-
-            body.createFixture(fixtureDef);
+            doors.add(new Door(screen, object));
         }
 
         //sign
@@ -115,7 +120,7 @@ public class Box2dWorldCreator
         for(MapObject object : map.getLayers().get(PKMConstants.ITEMS).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            items.add(new Item(screen, rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2));
+            items.add(new Item(screen, object));
         }
 
         //trainers
@@ -138,5 +143,8 @@ public class Box2dWorldCreator
 
     public Array<Item> getItems() {
         return items;
+    }
+    public Array<Door> getDoors() {
+        return doors;
     }
 }
