@@ -6,9 +6,9 @@ Player (26th)
   - grid movement (POSSIBLE FEATURE TO ADD?  NOT CRUICIAL)
 
 Items
-  - spawn (25th)
+  - ~~spawn (25th)~~
   - pickup (interact and add to bag)
-  - make items (potions/pokeball) (25th)
+  - ~~make items (potions/pokeball) (25th)~~
 
 Menu (27th)
   - graphic
