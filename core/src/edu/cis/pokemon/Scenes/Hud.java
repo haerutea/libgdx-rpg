@@ -1,6 +1,7 @@
 package edu.cis.pokemon.Scenes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -29,7 +30,7 @@ import java.time.LocalDateTime;
 
 import edu.cis.pokemon.Utils.PKMConstants;
 
-public class Hud implements Disposable
+public class Hud implements Disposable, InputProcessor
 {
     public Stage stage;
     public Stage menuStage;
@@ -108,7 +109,7 @@ public class Hud implements Disposable
         } );
 
 
-        //verticalGroup.addActor(temp);
+        verticalGroup.addActor(temp);
         verticalGroup.addActor(new Label("work pls", new Label.LabelStyle(new BitmapFont(), Color.WHITE)));
 
         verticalGroup.setFillParent(true);
@@ -136,5 +137,57 @@ public class Hud implements Disposable
     {
         stage.dispose();
         menuStage.dispose();
+    }
+
+    @Override
+    public boolean keyDown(int keycode)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button)
+    {
+        if(button == temp.hashCode())
+        {
+            Gdx.app.log("WORRKKKK", "Pressed");
+        }
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY)
+    {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount)
+    {
+        return false;
     }
 }

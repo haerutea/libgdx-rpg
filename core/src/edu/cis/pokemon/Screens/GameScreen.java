@@ -2,6 +2,8 @@ package edu.cis.pokemon.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -70,7 +72,16 @@ public class GameScreen implements Screen {
         player = new Player(world, this);
 
         interactionProcessor = InteractionProcessor.getInstance();
-        Gdx.input.setInputProcessor(new InputListener(this, hud, player, interactionProcessor));
+        InputProcessor hudInput = hud;
+        InputProcessor processor = new InputListener(this, hud, player, interactionProcessor);
+
+        //TODO:  TRIED TO USE THIS BUT IT STILL DOESN'T WORK
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor((InputProcessor) hud);
+        inputMultiplexer.addProcessor(processor);
+        Gdx.input.setInputProcessor(inputMultiplexer);
+
+        //Gdx.input.setInputProcessor(new InputListener(this, hud, player, interactionProcessor));
         world.setContactListener(new WorldContactListener(interactionProcessor));
     }
 
@@ -149,6 +160,7 @@ public class GameScreen implements Screen {
 
 		if(hud.isMenuVisible())
         {
+            hud.menuStage.act(deltaTime);
             hud.menuStage.draw();
         }
 
