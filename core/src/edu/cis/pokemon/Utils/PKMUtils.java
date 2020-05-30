@@ -1,5 +1,9 @@
 package edu.cis.pokemon.Utils;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -47,4 +51,12 @@ public class PKMUtils
 
         return fixtureDef;
     }
+
+//    void changeMap() {
+//        Gdx.app.postRunnable(() -> { //Post runnable posts the below task in opengl thread
+//            TiledMap testMap = new TmxMapLoader().load(PKMConstants.PLAYER_HOUSE_MAP_FILENAME); //load the new map
+//            renderer.getMap().dispose(); //dispose the old map
+//            renderer.setMap(testMap); //set the map in your renderer
+//        });
+//    }
 }

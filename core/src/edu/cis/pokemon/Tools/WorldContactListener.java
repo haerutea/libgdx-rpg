@@ -7,6 +7,9 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
+import edu.cis.pokemon.Enums.Direction;
+import edu.cis.pokemon.Sprites.Environment.Door;
+import edu.cis.pokemon.Sprites.Player;
 import edu.cis.pokemon.Utils.PKMConstants;
 
 public class WorldContactListener implements ContactListener
@@ -48,15 +51,24 @@ public class WorldContactListener implements ContactListener
                 Gdx.app.log("door", "collided");
                 if(fixA.getFilterData().categoryBits == PKMConstants.BIT_PLAYER) //if fixA == Player
                 {
-                    Gdx.app.log("door is", "fixB");
                     interactionProcessor.setCollidedObject(fixB.getUserData());
+                    Player player = ((Player) fixA.getUserData());
+                    if(player.getDirection().equals(Direction.BACK) ) {
+                        Gdx.app.log("door is", "fixB");
+                        Door door = (Door) fixB.getUserData();
+                        door.interact();
+                    }
                 }
                 else
                 {
-                    Gdx.app.log("door is", "fixA");
                     interactionProcessor.setCollidedObject(fixA.getUserData());
+                    Player player = ((Player) fixB.getUserData());
+                    if(player.getDirection().equals(Direction.BACK) ) {
+                        Gdx.app.log("door is", "fixA");
+                        Door door = (Door) fixA.getUserData();
+                        door.interact();
+                    }
                 }
-
         }
     }
 

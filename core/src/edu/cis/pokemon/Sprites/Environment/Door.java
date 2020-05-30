@@ -2,7 +2,6 @@ package edu.cis.pokemon.Sprites.Environment;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -11,7 +10,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
-import edu.cis.pokemon.Screens.GameScreen;
+import edu.cis.pokemon.Screens.AbstractScreen;
+import edu.cis.pokemon.Screens.PlayerHouseScreen;
 import edu.cis.pokemon.Sprites.Interactable;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Utils.PKMUtils;
@@ -22,7 +22,7 @@ public class Door extends Sprite implements Interactable {
     protected boolean open;
     private MapObject mapObject;
 
-    public Door(GameScreen screen, MapObject mapObject) {
+    public Door(AbstractScreen screen, MapObject mapObject) {
         this.world = screen.getWorld();
         this.mapObject = mapObject;
         Rectangle rect = ((RectangleMapObject) mapObject).getRectangle();
@@ -43,7 +43,7 @@ public class Door extends Sprite implements Interactable {
 
         short canCollideWith = PKMConstants.BIT_PLAYER; //is this even necessary with a staticBody?
 
-        FixtureDef fixtureDef = PKMUtils.createGameFixture(this, box2Body, PKMConstants.BIT_ITEM, canCollideWith);
+        FixtureDef fixtureDef = PKMUtils.createGameFixture(this, box2Body, PKMConstants.BIT_DOOR, canCollideWith);
         box2Body.createFixture(fixtureDef).setUserData(this);
     }
 
@@ -62,7 +62,26 @@ public class Door extends Sprite implements Interactable {
     }
 
     @Override
-    public void interact(Object object) {
+    public void interact() {
+        switch (mapObject.getProperties().toString()) {
+            case PKMConstants.PROPERTY_LAB:
 
+                break;
+            case PKMConstants.PROPERTY_PLAYER_HOUSE:
+//                PlayerHouseScreen screen = new PlayerHouseScreen();
+                break;
+            case PKMConstants.PROPERTY_HOUSE:
+
+                break;
+            case PKMConstants.PROPERTY_ROUTE:
+
+                break;
+
+        }
+//        Gdx.app.postRunnable(() -> { //Post runnable posts the below task in opengl thread
+//            testMap = new TmxMapLoader().load("someMap.tmx"); //load the new map
+//            renderer.getMap().dispose(); //dispose the old map
+//            renderer.setMap(testMap); //set the map in your renderer
+//        });
     }
 }
