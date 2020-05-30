@@ -10,24 +10,24 @@ Items
   - pickup (interact and add to bag)
   - ~~make items (potions/pokeball) (25th)~~
 
-Menu (27th)
+Menu (27th) (TY)
   - graphic
   - save file
   - bag interface (use and read items)
   - pokemons interface (show pokemon only) (TODO: LATER)
   - button interactions
 
-NPC (30th)
+NPC (30th) (TY)
   - spawn NPC
   - set dialog (make constants/hashmap)
   - shopkeeper
     - store and items
 
-Trainers (30th)
+Trainers (30th) (Allyson)
   - spawn
   - interaction of player entering line of sight (trigger animation and dialog)
 
-Objects in environment (27th)
+Objects in environment (27th) (Allyson)
   - interactions
   - ledges
     - different interaction with different sides
