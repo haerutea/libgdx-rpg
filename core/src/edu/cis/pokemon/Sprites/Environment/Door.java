@@ -22,8 +22,8 @@ public class Door extends Sprite implements Interactable {
     protected boolean open;
     private MapObject mapObject;
 
-    public Door(AbstractScreen screen, MapObject mapObject) {
-        this.world = screen.getWorld();
+    public Door(World world, MapObject mapObject) {
+        this.world = world;
         this.mapObject = mapObject;
         Rectangle rect = ((RectangleMapObject) mapObject).getRectangle();
         setPosition(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);

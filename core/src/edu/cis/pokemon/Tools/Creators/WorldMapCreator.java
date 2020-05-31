@@ -85,7 +85,7 @@ public class WorldMapCreator
         for(MapObject object : map.getLayers().get(PKMConstants.WORLD_DOORS).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            doors.add(new Door(screen, object));
+            doors.add(new Door(world, object));
         }
 
         //sign
