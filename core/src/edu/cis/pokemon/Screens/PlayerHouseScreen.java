@@ -65,7 +65,7 @@ public class PlayerHouseScreen implements Screen, AbstractScreen {
 
         this.player = player;
 
-        interactionProcessor = new InteractionProcessor();
+        //interactionProcessor = new InteractionProcessor();
         Gdx.input.setInputProcessor(new InputListener(this, hud, player, interactionProcessor));
         world.setContactListener(new WorldContactListener(interactionProcessor));
     }
@@ -123,14 +123,14 @@ public class PlayerHouseScreen implements Screen, AbstractScreen {
 
         game.batch.end();
 
-        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        game.batch.setProjectionMatrix(hud.infoStage.getCamera().combined);
 
         if(hud.isMenuVisible())
         {
             hud.menuStage.draw();
         }
 
-        hud.stage.draw();
+        hud.infoStage.draw();
     }
 
     @Override
