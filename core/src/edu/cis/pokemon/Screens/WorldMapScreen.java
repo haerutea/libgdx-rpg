@@ -132,6 +132,29 @@ public class WorldMapScreen implements Screen, AbstractScreen {
 
         for(Door door : box2dCreator.getDoors()) {
             door.draw(game.batch);
+            if(door.isInteracted()) {
+                String mapName = "";
+                if(door.getProperties(PKMConstants.PROPERTY_PLAYER_HOUSE)) {
+                    mapName = PKMConstants.HOUSE_MAP_FILENAME;
+                }
+                else if(door.getProperties(PKMConstants.PROPERTY_LAB)) {
+                    mapName = PKMConstants.LAB_MAP_FILENAME;
+                }
+                else if(door.getProperties(PKMConstants.PROPERTY_HOUSE)) {
+                    mapName = PKMConstants.HOUSE_MAP_FILENAME;
+                }
+                else if(door.getProperties(PKMConstants.PROPERTY_ROUTE)) {
+                    mapName = "";
+                }
+
+                Gdx.app.log("map: ", "" + mapName);
+                if(!mapName.equals("")) {
+                    map = new TmxMapLoader().load(mapName); //load the new map
+                    renderer.getMap().dispose(); //dispose the old map
+                    renderer.setMap(map); //set the map in your renderer
+                }
+//                door.setInteracted(false);
+            }
         }
 
         game.batch.end();

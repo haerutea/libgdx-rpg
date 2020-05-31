@@ -20,6 +20,8 @@ public class PKMConstants {
     //map file name
     public static final String MAIN_MAP_FILENAME = "new_town.tmx";
     public static final String PLAYER_HOUSE_MAP_FILENAME = "player_house.tmx";
+    public static final String HOUSE_MAP_FILENAME = "npc_house.tmx";
+    public static final String LAB_MAP_FILENAME = "lab.tmx";
 
 
     //dialog

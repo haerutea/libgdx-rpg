@@ -57,6 +57,7 @@ public class WorldContactListener implements ContactListener
                         Gdx.app.log("door is", "fixB");
                         Door door = (Door) fixB.getUserData();
                         door.interact();
+                        Gdx.app.log("door: ", "" + door.isInteracted());
                     }
                 }
                 else
@@ -67,6 +68,7 @@ public class WorldContactListener implements ContactListener
                         Gdx.app.log("door is", "fixA");
                         Door door = (Door) fixA.getUserData();
                         door.interact();
+                        Gdx.app.log("door: ", "" + door.isInteracted());
                     }
                 }
         }
