@@ -5,6 +5,16 @@ public class PKMConstants {
     public static final int V_HEIGHT = 9 * 16; //arbitrary numbers
     public static final int V_WIDTH = 11 * 16;
 
+    //HUD sizes and positions
+    public static final float LABEL_FONT_SCALE = 0.5f;
+    public static final float BUTTON_FONT_SCALE = 2f;
+    public static final float INFO_X = 0.85f;
+    public static final float INFO_Y = 0.92f;
+
+    public static final float MENU_Y = 0.80f;
+    public static final float MENU_SCALE = 0.15f;
+
+
     //atlas file name
     public static final String ATLAS_FILENAME = "pokemon_sprites.atlas";
     //map file name
