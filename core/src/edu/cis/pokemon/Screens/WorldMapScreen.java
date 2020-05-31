@@ -80,29 +80,10 @@ public class WorldMapScreen implements Screen, AbstractScreen {
         inputMultiplexer.addProcessor(processor);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
-        //Gdx.input.setInputProcessor(new InputListener(this, hud, player, interactionProcessor));
         world.setContactListener(new WorldContactListener(interactionProcessor));
     }
 
-    public void handleInput(float deltaTime) {
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-//            gameCam.position.x += 2000 * deltaTime; //TODO: temp
-//        }
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-//            gameCam.position.x -= 2000 * deltaTime; //TODO: temp
-//        }
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-//            gameCam.position.y += 2000 * deltaTime; //TODO: temp
-//        }
-//        if(Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-//            gameCam.position.y -= 2000 * deltaTime; //TODO: temp
-//        }
-    }
-
-
     public void update(float deltaTime) {
-        handleInput(deltaTime);
-
         world.step(PKMConstants.FPS, PKMConstants.V_ITER, PKMConstants.P_ITER);
         gameCam.position.x = player.box2Body.getPosition().x;
         gameCam.position.y = player.box2Body.getPosition().y;
