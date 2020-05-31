@@ -14,7 +14,6 @@ import com.badlogic.gdx.utils.Array;
 
 import edu.cis.pokemon.Enums.Direction;
 import edu.cis.pokemon.Enums.State;
-import edu.cis.pokemon.Screens.GameScreen;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Utils.PKMUtils;
 
@@ -37,10 +36,10 @@ public class Player extends Sprite
     private Animation<TextureRegion> leftWalk;
     private Animation<TextureRegion> rightWalk;
 
-    public World world;
+    private World world;
     public Body box2Body;
 
-    public Player(World world, GameScreen screen)
+    public Player(World world, TextureAtlas.AtlasRegion atlasRegion)
     {
         this.world = world;
         //starts off standing, facing front
@@ -50,7 +49,7 @@ public class Player extends Sprite
         stateTimer = 0;
         turnDirection = false;
 
-        playerRegion = screen.getAtlas().findRegion(PKMConstants.PLAYER_SPRITE);
+        playerRegion = atlasRegion;
         makeAnimations();
         defineBox2d();
     }
@@ -67,7 +66,7 @@ public class Player extends Sprite
                 PKMConstants.BIT_IMPASSIBLE
                 | PKMConstants.BIT_SIGN
                 | PKMConstants.BIT_LEDGE
-//                | PKMConstants.BIT_DOOR
+                | PKMConstants.BIT_DOOR
                 | PKMConstants.BIT_ITEM
                 | PKMConstants.BIT_GRASS;
 //        short collidesWith = PKMConstants.BIT_ITEM;
@@ -245,5 +244,9 @@ public class Player extends Sprite
     public void setDirection(Direction currentDirection)
     {
         this.currentDirection = currentDirection;
+    }
+
+    public World getWorld() {
+        return world;
     }
 }

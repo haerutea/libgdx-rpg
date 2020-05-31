@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -19,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import edu.cis.pokemon.Sprites.Environment.Door;
 import edu.cis.pokemon.Sprites.Items.Item;
-import edu.cis.pokemon.Tools.Box2dWorldCreator;
+import edu.cis.pokemon.Tools.Creators.WorldMapCreator;
 import edu.cis.pokemon.Tools.InputListener;
 import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Sprites.Player;
@@ -28,7 +27,7 @@ import edu.cis.pokemon.Tools.WorldContactListener;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Pokemon;
 
-public class GameScreen implements Screen {
+public class WorldMapScreen implements Screen, AbstractScreen {
     private Pokemon game;
     private TextureAtlas atlas;
 
@@ -43,7 +42,7 @@ public class GameScreen implements Screen {
     //Box2D variables
     private World world;
     private Box2DDebugRenderer b2dr; //gives graphical representation of bodies in box2d world
-    private Box2dWorldCreator box2dCreator;
+    private WorldMapCreator box2dCreator;
 
     //sprites
     private Player player;
@@ -51,7 +50,7 @@ public class GameScreen implements Screen {
     //interaction
     private InteractionProcessor interactionProcessor;
 
-    public GameScreen(Pokemon game) {
+    public WorldMapScreen(Pokemon game, Player player) {
         this.game = game;
         atlas = new TextureAtlas(PKMConstants.ATLAS_FILENAME);
 
@@ -61,15 +60,17 @@ public class GameScreen implements Screen {
         hud = new Hud(game.batch);
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load(PKMConstants.MAP_FILENAME);
+        map = mapLoader.load(PKMConstants.MAIN_MAP_FILENAME);
 
         renderer = new OrthogonalTiledMapRenderer(map);
 
-        world = new World(new Vector2(0, 0), true); //sleep objects that are at rest, therefore not calculating
+        this.world = player.getWorld();
+//        world = new World(new Vector2(0, 0), true); //sleep objects that are at rest, therefore not calculating
         b2dr = new Box2DDebugRenderer();
-        box2dCreator = new Box2dWorldCreator(this);
+        box2dCreator = new WorldMapCreator(this);
 
-        player = new Player(world, this);
+        this.player = player;
+//        player = new Player(world, this);
 
         interactionProcessor = InteractionProcessor.getInstance();
         InputProcessor processor = new InputListener(this, hud, player, interactionProcessor);

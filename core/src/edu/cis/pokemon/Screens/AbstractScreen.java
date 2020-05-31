@@ -1,34 +1,17 @@
 package edu.cis.pokemon.Screens;
 
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.physics.box2d.World;
 
-import edu.cis.pokemon.Pokemon;
+import edu.cis.pokemon.Scenes.Hud;
 
-public abstract class AbstractScreen implements Screen {
-    private Pokemon game;
+public interface AbstractScreen {
+    public Hud getHud();
 
-    public AbstractScreen(Pokemon game) {
-        this.game = game;
-    }
+    public TiledMap getMap();
 
-    @Override
-    public abstract void show();
+    public World getWorld();
 
-    @Override
-    public abstract void render(float delta);
-
-    @Override
-    public abstract void resize(int width, int height);
-
-    @Override
-    public abstract void pause();
-
-    @Override
-    public abstract void resume();
-
-    @Override
-    public abstract void hide();
-
-    @Override
-    public abstract void dispose();
+    public TextureAtlas getAtlas();
 }

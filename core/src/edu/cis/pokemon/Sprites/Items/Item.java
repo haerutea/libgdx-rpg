@@ -8,13 +8,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
-import edu.cis.pokemon.Screens.GameScreen;
+import edu.cis.pokemon.Screens.AbstractScreen;
 import edu.cis.pokemon.Sprites.Interactable;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Utils.PKMUtils;
@@ -28,7 +27,7 @@ public class Item extends Sprite implements Interactable {
 
     private TextureAtlas.AtlasRegion itemRegion;
 
-    public Item(GameScreen screen, MapObject mapObject) {
+    public Item(AbstractScreen screen, MapObject mapObject) {
         this.world = screen.getWorld();
         this.mapObject = mapObject;
         Rectangle rect = ((RectangleMapObject) mapObject).getRectangle();
@@ -74,7 +73,7 @@ public class Item extends Sprite implements Interactable {
     }
 
     @Override
-    public void interact(Object object) {
+    public void interact() {
         if(mapObject.getProperties().containsKey(PKMConstants.PROPERTY_POKEBALL)) {
             //dialog: you found _____!
             //add to bag

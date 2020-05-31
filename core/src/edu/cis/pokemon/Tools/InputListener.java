@@ -7,17 +7,17 @@ import com.badlogic.gdx.InputProcessor;
 import edu.cis.pokemon.Enums.Direction;
 import edu.cis.pokemon.Enums.State;
 import edu.cis.pokemon.Scenes.Hud;
-import edu.cis.pokemon.Screens.GameScreen;
+import edu.cis.pokemon.Screens.AbstractScreen;
 import edu.cis.pokemon.Sprites.Player;
 
 public class InputListener implements InputProcessor
 {
-    private GameScreen screen;
+    private AbstractScreen screen;
     private Hud hud;
     private Player player;
     private InteractionProcessor interactionProcessor;
 
-    public InputListener(GameScreen screen, Hud hud, Player player, InteractionProcessor interProcessor)
+    public InputListener(AbstractScreen screen, Hud hud, Player player, InteractionProcessor interProcessor)
     {
         this.screen = screen;
         this.hud = hud;

@@ -8,24 +8,46 @@ public class PKMConstants {
     //atlas file name
     public static final String ATLAS_FILENAME = "pokemon_sprites.atlas";
     //map file name
-    public static final String MAP_FILENAME = "new_town.tmx";
+    public static final String MAIN_MAP_FILENAME = "new_town.tmx";
+    public static final String PLAYER_HOUSE_MAP_FILENAME = "player_house.tmx";
+
 
     //dialog
     public static final String STRING_FOUND_POTION = "you found a potion!";
     public static final String STRING_FOUND_POKEBALL = "you found a pokeball!";
 
     //map object properties
+    //items
     public static final String PROPERTY_POTION = "potion";
     public static final String PROPERTY_POKEBALL = "pokeball";
+    //doors
+    public static final String PROPERTY_PLAYER_HOUSE = "player_house";
+    public static final String PROPERTY_LAB = "lab";
+    public static final String PROPERTY_HOUSE = "house";
+    public static final String PROPERTY_ROUTE = "route";
 
-    //map layer indexes
-    public static final int ENVIRONMENT = 1;
-    public static final int GRASS = 2;
-    public static final int LEDGES = 3;
-    public static final int DOORS = 4;
-    public static final int SIGNS = 5;
-    public static final int ITEMS = 6;
-    public static final int TRAINERS = 7;
+
+    //world map layer indexes
+    public static final int WORLD_ENVIRONMENT = 1;
+    public static final int WORLD_GRASS = 2;
+    public static final int WORLD_LEDGES = 3;
+    public static final int WORLD_DOORS = 4;
+    public static final int WORLD_SIGNS = 5;
+    public static final int WORLD_ITEMS = 6;
+    public static final int WORLD_TRAINERS = 7;
+
+    //player_house map layer indexes
+    public static final int PLAYER_HOUSE_ENVIRONMENT = 1;
+    public static final int PLAYER_HOUSE_TV = 2;
+    public static final int PLAYER_HOUSE_BED = 3;
+
+    //house map layer indexes
+    public static final int HOUSE_ENVIRONMENT = 1;
+    public static final int HOUSE_TV = 2;
+    public static final int HOUSE_BED = 3;
+
+    //lab map layer indexes
+    public static final int LAB_ENVIRONMENT = 1;
 
     //menu image file name
     public static final String MENU_FILENAME = "badlogic.jpg";
