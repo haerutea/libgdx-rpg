@@ -18,8 +18,7 @@ import edu.cis.pokemon.Utils.PKMUtils;
 
 public class Door extends Sprite implements Interactable {
     public World world;
-    public Body box2Body;
-    protected boolean open;
+    private Body box2Body;
     private MapObject mapObject;
     private boolean interacted;
 
@@ -34,7 +33,6 @@ public class Door extends Sprite implements Interactable {
 
         setBounds(getX(), getY(), 16, 16);
         //box2Body.setActive(false);
-        open = false;
     }
 
     protected void defineDoor() {
@@ -81,6 +79,10 @@ public class Door extends Sprite implements Interactable {
                 break;
 
         }
+    }
+
+    public Body getBox2Body() {
+        return box2Body;
     }
 
     public boolean isInteracted() {

@@ -20,7 +20,7 @@ import edu.cis.pokemon.Utils.PKMUtils;
 
 public class Item extends Sprite implements Interactable {
     public World world;
-    public Body box2Body;
+    private Body box2Body;
     protected boolean setToDestroy;
     protected boolean destroyed;
     private MapObject mapObject;
@@ -70,6 +70,10 @@ public class Item extends Sprite implements Interactable {
         if(!destroyed) {
             super.draw(batch);
         }
+    }
+
+    public Body getBox2Body() {
+        return box2Body;
     }
 
     @Override

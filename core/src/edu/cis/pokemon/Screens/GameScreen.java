@@ -1,5 +1,6 @@
 package edu.cis.pokemon.Screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
@@ -18,6 +19,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import edu.cis.pokemon.Sprites.Environment.Door;
 import edu.cis.pokemon.Sprites.Items.Item;
+import edu.cis.pokemon.Tools.Creators.Creator;
+import edu.cis.pokemon.Tools.Creators.PlayerHouseCreator;
 import edu.cis.pokemon.Tools.Creators.WorldMapCreator;
 import edu.cis.pokemon.Tools.InputListener;
 import edu.cis.pokemon.Scenes.Hud;
@@ -27,9 +30,10 @@ import edu.cis.pokemon.Tools.WorldContactListener;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Pokemon;
 
-public class WorldMapScreen implements Screen, AbstractScreen {
+public class GameScreen implements Screen, AbstractScreen {
     private Pokemon game;
     private TextureAtlas atlas;
+    private String mapName;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -42,7 +46,7 @@ public class WorldMapScreen implements Screen, AbstractScreen {
     //Box2D variables
     private World world;
     private Box2DDebugRenderer b2dr; //gives graphical representation of bodies in box2d world
-    private WorldMapCreator box2dCreator;
+    private Creator box2dCreator;
 
     //sprites
     private Player player;
@@ -50,9 +54,10 @@ public class WorldMapScreen implements Screen, AbstractScreen {
     //interaction
     private InteractionProcessor interactionProcessor;
 
-    public WorldMapScreen(Pokemon game, Player player) {
+    public GameScreen(Pokemon game, Player player, String mapName) {
         this.game = game;
         atlas = new TextureAtlas(PKMConstants.ATLAS_FILENAME);
+        this.mapName = mapName;
 
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(PKMConstants.V_WIDTH, PKMConstants.V_HEIGHT, gameCam);
@@ -60,14 +65,22 @@ public class WorldMapScreen implements Screen, AbstractScreen {
         hud = new Hud(game.batch);
 
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load(PKMConstants.MAIN_MAP_FILENAME);
+        map = mapLoader.load(mapName);
 
         renderer = new OrthogonalTiledMapRenderer(map);
 
         this.world = player.getWorld();
 //        world = new World(new Vector2(0, 0), true); //sleep objects that are at rest, therefore not calculating
         b2dr = new Box2DDebugRenderer();
-        box2dCreator = new WorldMapCreator(this);
+        if(mapName.equals(PKMConstants.MAIN_MAP_FILENAME)){
+            box2dCreator = new WorldMapCreator(this);
+        }
+        else if(mapName.equals(PKMConstants.PLAYER_HOUSE_MAP_FILENAME)) {
+            box2dCreator = new PlayerHouseCreator(this);
+        }
+        else {
+            box2dCreator = new WorldMapCreator(this); //catch all
+        }
 
         this.player = player;
 //        player = new Player(world, this);
@@ -91,13 +104,8 @@ public class WorldMapScreen implements Screen, AbstractScreen {
 
         player.update(deltaTime);
 
-        for(Item item : box2dCreator.getItems()) {
-            item.update(deltaTime);
-        }
-
-        for(Door door : box2dCreator.getDoors()) {
-            door.update(deltaTime);
-        }
+//        Gdx.app.log("creator ", "here");
+        box2dCreator.update(deltaTime);
 
         renderer.setView(gameCam);
 
@@ -126,36 +134,7 @@ public class WorldMapScreen implements Screen, AbstractScreen {
         player.move();
         player.draw(game.batch);
 
-        for(Item item : box2dCreator.getItems()) {
-            item.draw(game.batch);
-        }
-
-        for(Door door : box2dCreator.getDoors()) {
-            door.draw(game.batch);
-            if(door.isInteracted()) {
-                String mapName = "";
-                if(door.getProperties(PKMConstants.PROPERTY_PLAYER_HOUSE)) {
-                    mapName = PKMConstants.HOUSE_MAP_FILENAME;
-                }
-                else if(door.getProperties(PKMConstants.PROPERTY_LAB)) {
-                    mapName = PKMConstants.LAB_MAP_FILENAME;
-                }
-                else if(door.getProperties(PKMConstants.PROPERTY_HOUSE)) {
-                    mapName = PKMConstants.HOUSE_MAP_FILENAME;
-                }
-                else if(door.getProperties(PKMConstants.PROPERTY_ROUTE)) {
-                    mapName = "";
-                }
-
-                Gdx.app.log("map: ", "" + mapName);
-                if(!mapName.equals("")) {
-                    map = new TmxMapLoader().load(mapName); //load the new map
-                    renderer.getMap().dispose(); //dispose the old map
-                    renderer.setMap(map); //set the map in your renderer
-                }
-//                door.setInteracted(false);
-            }
-        }
+        box2dCreator.draw(game, this); //TODO
 
         game.batch.end();
 
@@ -190,10 +169,16 @@ public class WorldMapScreen implements Screen, AbstractScreen {
 
     }
 
+    public void restart(String name){
+        game.setScreen(new GameScreen(game, player, name));
+        this.dispose();
+    }
+
     @Override
     public void dispose()
     {
         map.dispose();
+        box2dCreator.dispose();
         renderer.dispose();
         hud.dispose();
     }
@@ -216,5 +201,9 @@ public class WorldMapScreen implements Screen, AbstractScreen {
     public World getWorld()
     {
         return world;
+    }
+
+    public void setMapName(String mapName) {
+        this.mapName = mapName;
     }
 }

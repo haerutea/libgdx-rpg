@@ -61,7 +61,7 @@ public class PlayerHouseScreen implements Screen, AbstractScreen {
 
         world = player.getWorld();
         b2dr = new Box2DDebugRenderer();
-        box2dCreator = new PlayerHouseCreator(this);
+//        box2dCreator = new PlayerHouseCreator(this);
 
         this.player = player;
 
