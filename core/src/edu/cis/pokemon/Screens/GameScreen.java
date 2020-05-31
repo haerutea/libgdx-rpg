@@ -72,12 +72,10 @@ public class GameScreen implements Screen {
         player = new Player(world, this);
 
         interactionProcessor = InteractionProcessor.getInstance();
-        InputProcessor hudInput = hud;
         InputProcessor processor = new InputListener(this, hud, player, interactionProcessor);
 
-        //TODO:  TRIED TO USE THIS BUT IT STILL DOESN'T WORK
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor((InputProcessor) hud);
+        inputMultiplexer.addProcessor(hud.menuStage);
         inputMultiplexer.addProcessor(processor);
         Gdx.input.setInputProcessor(inputMultiplexer);
 
@@ -156,7 +154,7 @@ public class GameScreen implements Screen {
 
         game.batch.end();
 
-		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+		game.batch.setProjectionMatrix(hud.infoStage.getCamera().combined);
 
 		if(hud.isMenuVisible())
         {
@@ -164,7 +162,7 @@ public class GameScreen implements Screen {
             hud.menuStage.draw();
         }
 
-		hud.stage.draw();
+		hud.infoStage.draw();
     }
 
     @Override

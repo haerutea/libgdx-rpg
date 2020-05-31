@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,8 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -32,7 +31,7 @@ import edu.cis.pokemon.Utils.PKMConstants;
 
 public class Hud implements Disposable, InputProcessor
 {
-    public Stage stage;
+    public Stage infoStage;
     public Stage menuStage;
     private Viewport viewport;
     private Viewport menuViewport;
@@ -41,6 +40,8 @@ public class Hud implements Disposable, InputProcessor
     private Actor menu;
 
     private VerticalGroup verticalGroup;
+    private Table infoTable;
+    private Table menuTable;
     private TextButton temp;
 
     Label dateTimeLabel;
@@ -49,38 +50,42 @@ public class Hud implements Disposable, InputProcessor
         localDateTime = LocalDateTime.now();
 
         viewport = new FitViewport(PKMConstants.V_WIDTH, PKMConstants.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, spriteBatch);
+        infoStage = new Stage(viewport, spriteBatch);
 
-        Table table = new Table();
-        table.top();
-        table.setFillParent(true);
+        Table infoTable = new Table();
+        infoTable.setSize(PKMConstants.V_WIDTH / 3, PKMConstants.V_HEIGHT / 3);
+        infoTable.top();
 
         //dateTimeLabel = new Label(String.format( , ), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         dateTimeLabel = new Label("test weekday/time", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         //TODO: change size
-        table.top().right().padTop(10).padRight(10); //go to top right
-        table.add(dateTimeLabel);
-        table.row();
-        stage.addActor(table);
+        infoTable.top().right().padTop(10).padRight(10); //go to top right
+        infoTable.add(dateTimeLabel).expandX();
+        infoTable.row();
+        infoStage.addActor(infoTable);
 
         menuViewport = new FitViewport(PKMConstants.V_WIDTH, PKMConstants.V_HEIGHT, new OrthographicCamera());
         menuStage = new Stage(menuViewport, spriteBatch);
-        Gdx.input.setInputProcessor(menuStage);
 
 //        menu = new Menu();
 //        menu.setVisible(false);
 //
 //        menuStage.addActor(menu);
-        //Texture bgTexture=new Texture("OptionBox.png");
-//        Image bgImage= new Image(new TextureRegionDrawable(new TextureRegion(bgTexture)));
-//        bgImage.setSize(bgTexture.getWidth()/2,bgTexture.getHeight()/2);
-//        bgImage.setPosition(Gdx.graphics.getWidth()/3-bgImage.getWidth()/2,Gdx.graphics.getHeight()/3-bgImage.getHeight());
-//        bgImage.setHeight(10);
-//        bgImage.setBounds(0,0,30,30);
-//        menuStage.addActor(bgImage);
 
-        verticalGroup = new VerticalGroup();
-        verticalGroup.setVisible(false);
+        //Texture bgTexture=new Texture("OptionBox.png");
+
+        menuTable = new Table();
+        //menuTable.setBackground(new TextureRegionDrawable(new TextureRegion(bgTexture)));
+
+        Pixmap bgPixmap = new Pixmap(1,1, Pixmap.Format.RGB565);
+        bgPixmap.setColor(Color.RED);
+        bgPixmap.fill();
+        TextureRegionDrawable textureRegionDrawableBg = new TextureRegionDrawable(new TextureRegion(new Texture(bgPixmap)));
+        menuTable.setBackground(textureRegionDrawableBg);
+        menuTable.setVisible(true);
+
+        //verticalGroup = new VerticalGroup();
+        //verticalGroup.setVisible(false);
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = new BitmapFont();
@@ -89,53 +94,51 @@ public class Hud implements Disposable, InputProcessor
         skin.addRegions(buttonAtlas);
         textButtonStyle.up = skin.getDrawable("menubutton");
         textButtonStyle.down = skin.getDrawable("menubuttonselected");
-        temp = new TextButton("TEMPORARY", textButtonStyle);
+        TextButton temp = new TextButton("TEMPORARY", textButtonStyle);
+        temp.setTransform(true);
+        //temp.setPosition(PKMConstants.V_WIDTH / 2, PKMConstants.V_HEIGHT / 2);
+        temp.setScale(0.2f);
 
-//        temp.addListener(new InputListener()
-//        {
-//            @Override
-//            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
-//            {
-//                Gdx.app.log("button", "Pressed");
-//                return super.touchDown(event, x, y, pointer, button);
-//            }
-//        });
-
-        temp.addListener( new ClickListener() {
+        temp.addListener(new InputListener()
+        {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("WORRKKKK", "Pressed");
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
+                Gdx.app.log("button", "Pressed");
+                return super.touchDown(event, x, y, pointer, button);
             }
-        } );
+        });
+//        verticalGroup.addActor(temp);
+//
+//        verticalGroup.setFillParent(true);
+//        verticalGroup.center();
+        menuTable.add(temp).expandX();
+        //menuTable.setTransform(true);
+        menuTable.setPosition(PKMConstants.V_WIDTH / 2, PKMConstants.V_HEIGHT / 2);
+        menuTable.setSize(5 * 16, 5 * 16);
+        //menuTable.setScale(0.5f);
+        menuTable.left().center();
 
-
-        verticalGroup.addActor(temp);
-        verticalGroup.addActor(new Label("work pls", new Label.LabelStyle(new BitmapFont(), Color.WHITE)));
-
-        verticalGroup.setFillParent(true);
-        verticalGroup.center();
-
-        menuStage.addActor(verticalGroup);
-        menuStage.addActor(temp);
+        menuStage.addActor(menuTable);
     }
 
     public void setMenuVisible(boolean visible)
     {
         Gdx.app.log("menu", "display");
         //menu.setVisible(visible);
-        verticalGroup.setVisible(visible);
+        menuTable.setVisible(visible);
 
     }
 
     public boolean isMenuVisible()
     {
-        return verticalGroup.isVisible();
+        return menuTable.isVisible();
     }
 
     @Override
     public void dispose()
     {
-        stage.dispose();
+        infoStage.dispose();
         menuStage.dispose();
     }
 
@@ -160,10 +163,7 @@ public class Hud implements Disposable, InputProcessor
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button)
     {
-        if(button == temp.hashCode())
-        {
-            Gdx.app.log("WORRKKKK", "Pressed");
-        }
+
         return false;
     }
 
