@@ -15,7 +15,7 @@ Menu (27th) (TY)
   - save file
   - bag interface (use and read items)
   - pokemons interface (show pokemon only) (TODO: LATER)
-  - button interactions
+  - ~~button interactions~~
 
 NPC (30th) (TY)
   - spawn NPC
