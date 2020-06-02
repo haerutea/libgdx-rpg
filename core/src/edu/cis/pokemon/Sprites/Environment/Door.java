@@ -18,21 +18,21 @@ import edu.cis.pokemon.Utils.PKMUtils;
 
 public class Door extends Sprite implements Interactable {
     public World world;
-    public Body box2Body;
-    protected boolean open;
+    private Body box2Body;
     private MapObject mapObject;
+    private boolean interacted;
 
     public Door(World world, MapObject mapObject) {
         this.world = world;
         this.mapObject = mapObject;
         Rectangle rect = ((RectangleMapObject) mapObject).getRectangle();
         setPosition(rect.getX() + rect.getWidth() / 2, rect.getY() + rect.getHeight() / 2);
+        interacted = false;
 
         defineDoor();
 
         setBounds(getX(), getY(), 16, 16);
         //box2Body.setActive(false);
-        open = false;
     }
 
     protected void defineDoor() {
@@ -63,6 +63,7 @@ public class Door extends Sprite implements Interactable {
 
     @Override
     public void interact() {
+        interacted = true;
         switch (mapObject.getProperties().toString()) {
             case PKMConstants.PROPERTY_LAB:
 
@@ -78,10 +79,21 @@ public class Door extends Sprite implements Interactable {
                 break;
 
         }
-//        Gdx.app.postRunnable(() -> { //Post runnable posts the below task in opengl thread
-//            testMap = new TmxMapLoader().load("someMap.tmx"); //load the new map
-//            renderer.getMap().dispose(); //dispose the old map
-//            renderer.setMap(testMap); //set the map in your renderer
-//        });
+    }
+
+    public Body getBox2Body() {
+        return box2Body;
+    }
+
+    public boolean isInteracted() {
+        return interacted;
+    }
+
+    public void setInteracted(boolean interacted) {
+        this.interacted = interacted;
+    }
+
+    public boolean getProperties(String key) {
+        return mapObject.getProperties().containsKey(key);
     }
 }

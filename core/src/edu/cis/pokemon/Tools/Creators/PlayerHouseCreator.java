@@ -3,6 +3,7 @@ package edu.cis.pokemon.Tools.Creators;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -10,12 +11,14 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import edu.cis.pokemon.Pokemon;
 import edu.cis.pokemon.Scenes.Hud;
+import edu.cis.pokemon.Screens.GameScreen;
 import edu.cis.pokemon.Screens.PlayerHouseScreen;
 import edu.cis.pokemon.Utils.PKMConstants;
 
-public class PlayerHouseCreator {
-    public PlayerHouseCreator(PlayerHouseScreen screen)
+public class PlayerHouseCreator implements Creator{
+    public PlayerHouseCreator(GameScreen screen)
     {
         BodyDef bodyDef = new BodyDef();
         PolygonShape polyShape = new PolygonShape();
@@ -88,6 +91,26 @@ public class PlayerHouseCreator {
 //            fixtureDef.filter.categoryBits = PKMConstants.BIT_TRAINER;
 //
 //            body.createFixture(fixtureDef);
+//        }
+    }
+
+    @Override
+    public void update(float deltaTime) {
+
+    }
+
+    @Override
+    public void draw(Pokemon game, GameScreen gameScreen) {
+
+    }
+
+    @Override
+    public void dispose() {
+//        //highest index layer is trainers
+//        for(int i = 0; i <= PKMConstants.WORLD_TRAINERS; i++) {
+//            TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(i);
+//            TiledMapTileLayer.Cell cell = layer.getCell((int) (body.getPosition().x) , (int) (body.getPosition().y));
+//            cell.setTile(null);
 //        }
     }
 }
