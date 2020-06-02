@@ -3,7 +3,6 @@ package edu.cis.pokemon.Tools.Creators;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -14,11 +13,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import edu.cis.pokemon.Pokemon;
 import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Screens.GameScreen;
-import edu.cis.pokemon.Screens.PlayerHouseScreen;
 import edu.cis.pokemon.Utils.PKMConstants;
 
-public class PlayerHouseCreator implements Creator{
-    public PlayerHouseCreator(GameScreen screen)
+public class HouseCreator implements Creator {
+
+    public HouseCreator(GameScreen screen)
     {
         BodyDef bodyDef = new BodyDef();
         PolygonShape polyShape = new PolygonShape();
@@ -30,7 +29,7 @@ public class PlayerHouseCreator implements Creator{
         Hud hud = screen.getHud();
 
         //impassible stuff like trees, buildings, etc
-        for(MapObject object : map.getLayers().get(PKMConstants.PLAYER_HOUSE_ENVIRONMENT).getObjects().getByType(RectangleMapObject.class))
+        for(MapObject object : map.getLayers().get(PKMConstants.HOUSE_ENVIRONMENT).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -45,7 +44,7 @@ public class PlayerHouseCreator implements Creator{
         }
 
         //tv
-        for(MapObject object : map.getLayers().get(PKMConstants.PLAYER_HOUSE_TV).getObjects().getByType(RectangleMapObject.class))
+        for(MapObject object : map.getLayers().get(PKMConstants.HOUSE_TV).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -60,24 +59,8 @@ public class PlayerHouseCreator implements Creator{
             body.createFixture(fixtureDef);
         }
 
-        //bed
-        for(MapObject object : map.getLayers().get(PKMConstants.PLAYER_HOUSE_BED).getObjects().getByType(RectangleMapObject.class))
-        {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
-
-            body = world.createBody(bodyDef);
-
-            polyShape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fixtureDef.shape = polyShape;
-            fixtureDef.filter.categoryBits = PKMConstants.BIT_LEDGE;
-
-            body.createFixture(fixtureDef);
-        }
-
         //exit
-        for(MapObject object : map.getLayers().get(PKMConstants.PLAYER_HOUSE_EXIT).getObjects().getByType(RectangleMapObject.class))
+        for(MapObject object : map.getLayers().get(PKMConstants.HOUSE_EXIT).getObjects().getByType(RectangleMapObject.class))
         {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -92,22 +75,7 @@ public class PlayerHouseCreator implements Creator{
             body.createFixture(fixtureDef);
         }
 
-//        //npc
-//        //TODO: CHANGE TO MAKE new npcs() INSTEAD
-//        for(MapObject object : map.getLayers().get(PKMConstants.WORLD_TRAINERS).getObjects().getByType(RectangleMapObject.class))
-//        {
-//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-//            bodyDef.type = BodyDef.BodyType.StaticBody;
-//            bodyDef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
-//
-//            body = world.createBody(bodyDef);
-//
-//            polyShape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-//            fixtureDef.shape = polyShape;
-//            fixtureDef.filter.categoryBits = PKMConstants.BIT_TRAINER;
-//
-//            body.createFixture(fixtureDef);
-//        }
+        //npc
     }
 
     @Override
@@ -122,11 +90,6 @@ public class PlayerHouseCreator implements Creator{
 
     @Override
     public void dispose() {
-//        //highest index layer is trainers
-//        for(int i = 0; i <= PKMConstants.WORLD_TRAINERS; i++) {
-//            TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(i);
-//            TiledMapTileLayer.Cell cell = layer.getCell((int) (body.getPosition().x) , (int) (body.getPosition().y));
-//            cell.setTile(null);
-//        }
+
     }
 }

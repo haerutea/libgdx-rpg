@@ -52,14 +52,16 @@ public class PKMConstants {
     public static final int PLAYER_HOUSE_ENVIRONMENT = 1;
     public static final int PLAYER_HOUSE_TV = 2;
     public static final int PLAYER_HOUSE_BED = 3;
+    public static final int PLAYER_HOUSE_EXIT = 4;
 
     //house map layer indexes
     public static final int HOUSE_ENVIRONMENT = 1;
     public static final int HOUSE_TV = 2;
-    public static final int HOUSE_BED = 3;
+    public static final int HOUSE_EXIT = 3;
 
     //lab map layer indexes
     public static final int LAB_ENVIRONMENT = 1;
+    public static final int LAB_EXIT = 2;
 
     //menu image file name
     public static final String MENU_FILENAME = "badlogic.jpg";

@@ -20,6 +20,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import edu.cis.pokemon.Sprites.Environment.Door;
 import edu.cis.pokemon.Sprites.Items.Item;
 import edu.cis.pokemon.Tools.Creators.Creator;
+import edu.cis.pokemon.Tools.Creators.HouseCreator;
+import edu.cis.pokemon.Tools.Creators.LabCreator;
 import edu.cis.pokemon.Tools.Creators.PlayerHouseCreator;
 import edu.cis.pokemon.Tools.Creators.WorldMapCreator;
 import edu.cis.pokemon.Tools.InputListener;
@@ -78,6 +80,15 @@ public class GameScreen implements Screen, AbstractScreen {
         else if(mapName.equals(PKMConstants.PLAYER_HOUSE_MAP_FILENAME)) {
             box2dCreator = new PlayerHouseCreator(this);
         }
+        else if(mapName.equals(PKMConstants.HOUSE_MAP_FILENAME)) {
+            box2dCreator = new HouseCreator(this);
+        }
+        else if(mapName.equals(PKMConstants.LAB_MAP_FILENAME)) {
+            box2dCreator = new LabCreator(this); //TODO: map doesn't load for this one
+        }
+//        else if(mapName.equals(PKMConstants.route)) {
+//            box2dCreator = new (this);
+//        }
         else {
             box2dCreator = new WorldMapCreator(this); //catch all
         }
