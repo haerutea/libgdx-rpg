@@ -1,7 +1,6 @@
 package edu.cis.pokemon.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -52,7 +51,7 @@ public class WorldMapScreen implements Screen, AbstractScreen {
 
     public WorldMapScreen(Pokemon game, Player player) {
         this.game = game;
-        atlas = new TextureAtlas(PKMConstants.ATLAS_FILENAME);
+        atlas = new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME);
 
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(PKMConstants.V_WIDTH, PKMConstants.V_HEIGHT, gameCam);
