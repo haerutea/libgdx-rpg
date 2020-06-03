@@ -19,6 +19,10 @@
   <object id="7" x="96" y="96" width="64" height="32"/>
  </objectgroup>
  <objectgroup id="3" name="exit">
-  <object id="9" x="64" y="160" width="32" height="16"/>
+  <object id="9" x="64" y="160" width="32" height="16">
+   <properties>
+    <property name="lab" value=""/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

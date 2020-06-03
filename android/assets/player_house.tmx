@@ -24,6 +24,10 @@
   <object id="11" x="240" y="16" width="16" height="32"/>
  </objectgroup>
  <objectgroup id="5" name="exit">
-  <object id="13" x="32" y="128" width="32" height="16"/>
+  <object id="13" x="32" y="128" width="32" height="16">
+   <properties>
+    <property name="player_house" value=""/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

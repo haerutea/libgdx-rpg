@@ -53,7 +53,7 @@ public class WorldContactListener implements ContactListener
                 {
                     interactionProcessor.setCollidedObject(fixB.getUserData());
                     Player player = ((Player) fixA.getUserData());
-                    if(player.getDirection().equals(Direction.BACK) ) {
+                    if(player.getDirection().equals(Direction.BACK) || player.getDirection().equals(Direction.FRONT)) {
                         Gdx.app.log("door is", "fixB");
                         Door door = (Door) fixB.getUserData();
                         door.interact();
@@ -64,7 +64,7 @@ public class WorldContactListener implements ContactListener
                 {
                     interactionProcessor.setCollidedObject(fixA.getUserData());
                     Player player = ((Player) fixB.getUserData());
-                    if(player.getDirection().equals(Direction.BACK) ) {
+                    if(player.getDirection().equals(Direction.BACK) || player.getDirection().equals(Direction.FRONT)) {
                         Gdx.app.log("door is", "fixA");
                         Door door = (Door) fixA.getUserData();
                         door.interact();

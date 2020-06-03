@@ -32,7 +32,7 @@ public class PKMConstants {
     //items
     public static final String PROPERTY_POTION = "potion";
     public static final String PROPERTY_POKEBALL = "pokeball";
-    //doors
+    //doors and exits
     public static final String PROPERTY_PLAYER_HOUSE = "player_house";
     public static final String PROPERTY_LAB = "lab";
     public static final String PROPERTY_HOUSE = "house";
