@@ -16,14 +16,13 @@ public class Pokemon extends Game {
 
 	private GameScreen screen;
 
-
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		//img = new Texture("badlogic.jpg");
 
 		World world = new World(new Vector2(0, 0), true);
-		Player player = new Player(world, new TextureAtlas(PKMConstants.ATLAS_FILENAME).findRegion(PKMConstants.PLAYER_SPRITE));
+		Player player = new Player(world, new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME).findRegion(PKMConstants.PLAYER_SPRITE));
 
 		screen = new GameScreen(this, player, PKMConstants.MAIN_MAP_FILENAME);
 		this.setScreen(screen);

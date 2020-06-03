@@ -58,7 +58,7 @@ public class GameScreen implements Screen, AbstractScreen {
 
     public GameScreen(Pokemon game, Player player, String mapName) {
         this.game = game;
-        atlas = new TextureAtlas(PKMConstants.ATLAS_FILENAME);
+        atlas = new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME);
         this.mapName = mapName;
 
         gameCam = new OrthographicCamera();
@@ -145,7 +145,7 @@ public class GameScreen implements Screen, AbstractScreen {
         player.move();
         player.draw(game.batch);
 
-        box2dCreator.draw(game, this); //TODO
+        box2dCreator.draw(game, this);
 
         game.batch.end();
 

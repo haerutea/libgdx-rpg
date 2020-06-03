@@ -19,104 +19,42 @@ import edu.cis.pokemon.Screens.GameScreen;
 import edu.cis.pokemon.Sprites.Environment.Door;
 import edu.cis.pokemon.Sprites.Items.Item;
 import edu.cis.pokemon.Utils.PKMConstants;
+import edu.cis.pokemon.Utils.PKMUtils;
 
 public class WorldMapCreator implements Creator {
     private Array<Item> items;
     private Array<Door> doors;
-    private Body body;
-    private TiledMap map;
     private Array<Body> allBodies;
 
     public WorldMapCreator(GameScreen screen)
     {
-        BodyDef bodyDef = new BodyDef();
-        PolygonShape polyShape = new PolygonShape();
-        FixtureDef fixtureDef = new FixtureDef(); //gotta define the fixture first and then add body
-
         World world = screen.getWorld();
-        map = screen.getMap();
-        Hud hud = screen.getHud();
+        TiledMap map = screen.getMap();
 
-        body = world.createBody(bodyDef);
+        BodyDef bodyDef = new BodyDef();
+        Body body = world.createBody(bodyDef);
+
         allBodies = new Array<>();
         allBodies.add(body);
 
         //impassible stuff like trees, buildings, etc
-        for(MapObject object : map.getLayers().get(PKMConstants.WORLD_ENVIRONMENT).getObjects().getByType(RectangleMapObject.class))
-        {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
-
-            body = world.createBody(bodyDef);
-
-            polyShape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fixtureDef.shape = polyShape;
-            fixtureDef.filter.categoryBits = PKMConstants.BIT_IMPASSIBLE;
-            body.createFixture(fixtureDef);
-            allBodies.add(body);
-        }
+        allBodies.addAll(PKMUtils.createBody(screen, PKMConstants.WORLD_ENVIRONMENT));
 
         //grass
-        for(MapObject object : map.getLayers().get(PKMConstants.WORLD_GRASS).getObjects().getByType(RectangleMapObject.class))
-        {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
-
-            body = world.createBody(bodyDef);
-
-            polyShape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fixtureDef.shape = polyShape;
-            fixtureDef.filter.categoryBits = PKMConstants.BIT_GRASS;
-
-            body.createFixture(fixtureDef);
-            allBodies.add(body);
-        }
+        allBodies.addAll(PKMUtils.createBody(screen, PKMConstants.WORLD_GRASS));
 
         //ledges
-        for(MapObject object : map.getLayers().get(PKMConstants.WORLD_LEDGES).getObjects().getByType(RectangleMapObject.class))
-        {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
-
-            body = world.createBody(bodyDef);
-
-            polyShape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fixtureDef.shape = polyShape;
-            fixtureDef.filter.categoryBits = PKMConstants.BIT_LEDGE;
-
-            body.createFixture(fixtureDef);
-            allBodies.add(body);
-        }
+        allBodies.addAll(PKMUtils.createBody(screen, PKMConstants.WORLD_LEDGES));
 
         //door
         doors = new Array<>();
-        for(MapObject object : map.getLayers().get(PKMConstants.WORLD_DOORS).getObjects().getByType(RectangleMapObject.class))
-        {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            Door door = new Door(world, object);
-            doors.add(door);
+        doors.addAll(PKMUtils.createDoors(screen, PKMConstants.WORLD_DOORS, doors));
+        for(Door door : doors) {
             allBodies.add(door.getBox2Body());
         }
 
         //sign
-        for(MapObject object : map.getLayers().get(PKMConstants.WORLD_SIGNS).getObjects().getByType(RectangleMapObject.class))
-        {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
-
-            body = world.createBody(bodyDef);
-
-            polyShape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fixtureDef.shape = polyShape;
-            fixtureDef.filter.categoryBits = PKMConstants.BIT_SIGN;
-
-            body.createFixture(fixtureDef);
-            allBodies.add(body);
-        }
+        allBodies.addAll(PKMUtils.createBody(screen, PKMConstants.WORLD_SIGNS));
 
         //items
         items = new Array<>();
@@ -130,28 +68,7 @@ public class WorldMapCreator implements Creator {
 
         //trainers
         //TODO: CHANGE TO MAKE new Trainer() INSTEAD
-        for(MapObject object : map.getLayers().get(PKMConstants.WORLD_TRAINERS).getObjects().getByType(RectangleMapObject.class))
-        {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bodyDef.type = BodyDef.BodyType.StaticBody;
-            bodyDef.position.set((rect.getX() + rect.getWidth() / 2), (rect.getY() + rect.getHeight() / 2));
-
-            body = world.createBody(bodyDef);
-
-            polyShape.setAsBox(rect.getWidth() / 2, rect.getHeight() / 2);
-            fixtureDef.shape = polyShape;
-            fixtureDef.filter.categoryBits = PKMConstants.BIT_TRAINER;
-
-            body.createFixture(fixtureDef);
-            allBodies.add(body);
-        }
-    }
-
-    public Array<Item> getItems() {
-        return items;
-    }
-    public Array<Door> getDoors() {
-        return doors;
+        allBodies.addAll(PKMUtils.createBody(screen, PKMConstants.WORLD_TRAINERS));
     }
 
     @Override
@@ -206,7 +123,7 @@ public class WorldMapCreator implements Creator {
         for (Body body : allBodies) {
             Array<Fixture> fixtures = body.getFixtureList();
             for (Fixture fixture : fixtures) {
-                body.destroyFixture(fixture); //TODO: items and doors don't delete
+                body.destroyFixture(fixture); //TODO: items don't delete (doors do delete now)
             }
         }
     }
