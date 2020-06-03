@@ -16,7 +16,8 @@ public class PKMConstants {
 
 
     //atlas file name
-    public static final String ATLAS_FILENAME = "pokemon_sprites.atlas";
+    public static final String SPRITES_ATLAS_FILENAME = "pokemon_sprites.atlas";
+    public static final String BUTTON_ATLAS_FILENAME = "buttons.atlas";
     //map file name
     public static final String MAIN_MAP_FILENAME = "new_town.tmx";
     public static final String PLAYER_HOUSE_MAP_FILENAME = "player_house.tmx";

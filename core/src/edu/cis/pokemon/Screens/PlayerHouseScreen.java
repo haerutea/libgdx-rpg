@@ -47,7 +47,7 @@ public class PlayerHouseScreen implements Screen, AbstractScreen {
 
     public PlayerHouseScreen(Pokemon game, Player player) {
         this.game = game;
-        atlas = new TextureAtlas(PKMConstants.ATLAS_FILENAME);
+        atlas = new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME);
 
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(PKMConstants.V_WIDTH, PKMConstants.V_HEIGHT, gameCam);
