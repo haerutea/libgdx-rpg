@@ -16,7 +16,6 @@ public class Pokemon extends Game {
 
 	private GameScreen screen;
 
-
 	@Override
 	public void create () {
 		batch = new SpriteBatch();

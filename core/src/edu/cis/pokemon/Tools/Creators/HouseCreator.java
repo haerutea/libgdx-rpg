@@ -7,20 +7,23 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import edu.cis.pokemon.Pokemon;
+import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Screens.GameScreen;
 import edu.cis.pokemon.Sprites.Environment.Door;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Utils.PKMUtils;
 
-public class PlayerHouseCreator implements Creator{
+public class HouseCreator implements Creator {
     private Array<Door> exits;
     private Array<Body> allBodies;
 
-    public PlayerHouseCreator(GameScreen screen)
+    public HouseCreator(GameScreen screen)
     {
         World world = screen.getWorld();
         TiledMap map = screen.getMap();
@@ -32,15 +35,14 @@ public class PlayerHouseCreator implements Creator{
         allBodies.add(body);
 
         //impassible stuff like trees, buildings, etc
-        allBodies.addAll(PKMUtils.createBody(screen, PKMConstants.PLAYER_HOUSE_ENVIRONMENT));
+        allBodies.addAll(PKMUtils.createBody(screen, PKMConstants.HOUSE_ENVIRONMENT));
+
         //tv
-        allBodies.addAll(PKMUtils.createBody(screen, PKMConstants.PLAYER_HOUSE_TV));
-        //bed
-        allBodies.addAll(PKMUtils.createBody(screen, PKMConstants.PLAYER_HOUSE_BED));
+        allBodies.addAll(PKMUtils.createBody(screen, PKMConstants.HOUSE_TV));
 
         //exit
         exits = new Array<>();
-        exits.addAll(PKMUtils.createDoors(screen, PKMConstants.WORLD_DOORS, exits));
+        exits.addAll(PKMUtils.createDoors(screen, PKMConstants.WORLD_LEDGES, exits));
         for(Door exit : exits) {
             allBodies.add(exit.getBox2Body());
         }
@@ -62,7 +64,7 @@ public class PlayerHouseCreator implements Creator{
 
             String mapName = "";
             if (door.isInteracted()) {
-                if (door.getProperties(PKMConstants.PROPERTY_PLAYER_HOUSE)) {
+                if (door.getProperties(PKMConstants.PROPERTY_HOUSE)) {
                     mapName = PKMConstants.MAIN_MAP_FILENAME;
                 }
                 door.setInteracted(false);

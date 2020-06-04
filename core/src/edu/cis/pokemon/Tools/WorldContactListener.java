@@ -47,13 +47,14 @@ public class WorldContactListener implements ContactListener
                     Gdx.app.log("item is", "fixA");
                     interactionProcessor.setCollidedObject(fixA.getUserData());
                 }
+                break;
             case PKMConstants.BIT_PLAYER | PKMConstants.BIT_DOOR:
                 Gdx.app.log("door", "collided");
                 if(fixA.getFilterData().categoryBits == PKMConstants.BIT_PLAYER) //if fixA == Player
                 {
                     interactionProcessor.setCollidedObject(fixB.getUserData());
                     Player player = ((Player) fixA.getUserData());
-                    if(player.getDirection().equals(Direction.BACK) ) {
+                    if(player.getDirection().equals(Direction.BACK) || player.getDirection().equals(Direction.FRONT)) {
                         Gdx.app.log("door is", "fixB");
                         Door door = (Door) fixB.getUserData();
                         door.interact();
@@ -64,12 +65,13 @@ public class WorldContactListener implements ContactListener
                 {
                     interactionProcessor.setCollidedObject(fixA.getUserData());
                     Player player = ((Player) fixB.getUserData());
-                    if(player.getDirection().equals(Direction.BACK) ) {
+                    if(player.getDirection().equals(Direction.BACK) || player.getDirection().equals(Direction.FRONT)) {
                         Gdx.app.log("door is", "fixA");
                         Door door = (Door) fixA.getUserData();
                         door.interact();
                     }
                 }
+                break;
         }
     }
 

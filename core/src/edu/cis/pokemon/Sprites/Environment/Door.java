@@ -10,8 +10,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 
-import edu.cis.pokemon.Screens.AbstractScreen;
-import edu.cis.pokemon.Screens.PlayerHouseScreen;
 import edu.cis.pokemon.Sprites.Interactable;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Utils.PKMUtils;
@@ -64,21 +62,21 @@ public class Door extends Sprite implements Interactable {
     @Override
     public void interact() {
         interacted = true;
-        switch (mapObject.getProperties().toString()) {
-            case PKMConstants.PROPERTY_LAB:
-
-                break;
-            case PKMConstants.PROPERTY_PLAYER_HOUSE:
+//        switch (mapObject.getProperties().toString()) {
+//            case PKMConstants.PROPERTY_LAB:
+//
+//                break;
+//            case PKMConstants.PROPERTY_PLAYER_HOUSE:
 //                PlayerHouseScreen screen = new PlayerHouseScreen();
-                break;
-            case PKMConstants.PROPERTY_HOUSE:
-
-                break;
-            case PKMConstants.PROPERTY_ROUTE:
-
-                break;
-
-        }
+//                break;
+//            case PKMConstants.PROPERTY_HOUSE:
+//
+//                break;
+//            case PKMConstants.PROPERTY_ROUTE:
+//
+//                break;
+//
+//        }
     }
 
     public Body getBox2Body() {
