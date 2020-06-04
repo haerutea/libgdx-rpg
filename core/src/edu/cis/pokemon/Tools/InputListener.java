@@ -5,10 +5,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
 import edu.cis.pokemon.Enums.Direction;
+import edu.cis.pokemon.Enums.GameState;
 import edu.cis.pokemon.Enums.State;
 import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Screens.AbstractScreen;
 import edu.cis.pokemon.Sprites.Player;
+import edu.cis.pokemon.Utils.PKMUtils;
 
 public class InputListener implements InputProcessor
 {
@@ -28,42 +30,65 @@ public class InputListener implements InputProcessor
     @Override
     public boolean keyDown(int keycode)
     {
-        switch(keycode)
+        if(PKMUtils.getCurrentGameState() == GameState.CONTINUE)
         {
-            case Input.Keys.X:
-                hud.setMenuVisible(!hud.isMenuVisible());
-                Gdx.app.log("x", "works");
-                break;
-            case Input.Keys.UP:
-                //forces can't be implemented here bcs it'll only apply for when key is first pressed down, apply force in main loop instead
-                player.setDirection(Direction.BACK);
-                player.setState(State.RUNNING);
-                break;
-            case Input.Keys.DOWN:
-                player.setDirection(Direction.FRONT);
-                player.setState(State.RUNNING);
-                break;
-            case Input.Keys.LEFT:
-                if(player.isFacingRight())
-                {
-                    player.setTurnDirection(true);
-                }
-                player.setDirection(Direction.LEFT);
-                player.setState(State.RUNNING);
-                break;
-            case Input.Keys.RIGHT:
-                if(!player.isFacingRight())
-                {
-                    player.setTurnDirection(true);
-                }
-                player.setDirection(Direction.RIGHT);
-                player.setState(State.RUNNING);
-                break;
-            case Input.Keys.ENTER:
-                //TODO: CHANGE THIS TO CALL A PROCESS METHOD IN INTERACTION PROCESSOR?
-                Gdx.app.log("object: " , "" + interactionProcessor.getCollidedObject());
+            switch(keycode)
+            {
+                case Input.Keys.X:
+                    hud.setMenuVisible(true);
+                    PKMUtils.setCurrentGameState(GameState.PAUSED);
+                    Gdx.app.log("x", "works");
+                    break;
+                case Input.Keys.UP:
+                    //forces can't be implemented here bcs it'll only apply for when key is first pressed down, apply force in main loop instead
+                    player.setDirection(Direction.BACK);
+                    player.setState(State.RUNNING);
+                    break;
+                case Input.Keys.DOWN:
+                    player.setDirection(Direction.FRONT);
+                    player.setState(State.RUNNING);
+                    break;
+                case Input.Keys.LEFT:
+                    if(player.isFacingRight())
+                    {
+                        player.setTurnDirection(true);
+                    }
+                    player.setDirection(Direction.LEFT);
+                    player.setState(State.RUNNING);
+                    break;
+                case Input.Keys.RIGHT:
+                    if(!player.isFacingRight())
+                    {
+                        player.setTurnDirection(true);
+                    }
+                    player.setDirection(Direction.RIGHT);
+                    player.setState(State.RUNNING);
+                    break;
+                case Input.Keys.ENTER:
+                    //TODO: CHANGE THIS TO CALL A PROCESS METHOD IN INTERACTION PROCESSOR?
+                    Gdx.app.log("object: " , "" + interactionProcessor.getCollidedObject());
 
+            }
         }
+        else //if gamestate = paused
+        {
+            switch(keycode)
+            {
+                case Input.Keys.TAB:
+                    Gdx.app.log("tab", "works");
+                    hud.changeButtonDisplay();
+                    break;
+                case Input.Keys.X:
+                    hud.setMenuVisible(false);
+                    PKMUtils.setCurrentGameState(GameState.CONTINUE);
+                    Gdx.app.log("x", "works");
+                    break;
+                case Input.Keys.ENTER:
+                    hud.triggerButton();
+                    break;
+            }
+        }
+
         return true;
     }
 

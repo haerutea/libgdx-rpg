@@ -11,7 +11,7 @@ public class PKMConstants {
     public static final float INFO_X = 0.85f;
     public static final float INFO_Y = 0.92f;
 
-    public static final float MENU_Y = 0.80f;
+    public static final float MENU_Y = 0.75f;
     public static final float MENU_SCALE = 0.15f;
 
 

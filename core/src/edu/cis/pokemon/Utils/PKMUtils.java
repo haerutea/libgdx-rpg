@@ -9,8 +9,22 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
+import edu.cis.pokemon.Enums.GameState;
+
 public class PKMUtils
 {
+    public static GameState currentGameState;
+
+    public static void setCurrentGameState(GameState currentGameState)
+    {
+        PKMUtils.currentGameState = currentGameState;
+    }
+
+    public static GameState getCurrentGameState()
+    {
+        return currentGameState;
+    }
+
     public static FixtureDef createGameFixture(Object userData, Body box2Body, short fixtureBit, short canCollideWith)
     {
         PolygonShape polyShape = new PolygonShape();
@@ -36,6 +50,7 @@ public class PKMUtils
 //
 //        return fixtureDef;
     }
+
 
     public static FixtureDef createPlayerFixture(Object userData, Body box2Body, short fixtureBit, short canCollideWith)
     {

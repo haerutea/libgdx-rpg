@@ -17,6 +17,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import edu.cis.pokemon.Enums.GameState;
+import edu.cis.pokemon.Enums.State;
 import edu.cis.pokemon.Sprites.Environment.Door;
 import edu.cis.pokemon.Sprites.Items.Item;
 import edu.cis.pokemon.Tools.Creators.Creator;
@@ -29,6 +31,7 @@ import edu.cis.pokemon.Tools.InteractionProcessor;
 import edu.cis.pokemon.Tools.WorldContactListener;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Pokemon;
+import edu.cis.pokemon.Utils.PKMUtils;
 
 public class GameScreen implements Screen, AbstractScreen {
     private Pokemon game;
@@ -56,7 +59,7 @@ public class GameScreen implements Screen, AbstractScreen {
 
     public GameScreen(Pokemon game, Player player, String mapName) {
         this.game = game;
-        atlas = new TextureAtlas(PKMConstants.ATLAS_FILENAME);
+        atlas = new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME);
         this.mapName = mapName;
 
         gameCam = new OrthographicCamera();
@@ -85,6 +88,7 @@ public class GameScreen implements Screen, AbstractScreen {
         this.player = player;
 //        player = new Player(world, this);
 
+        PKMUtils.setCurrentGameState(GameState.CONTINUE);
         interactionProcessor = InteractionProcessor.getInstance();
         InputProcessor processor = new InputListener(this, hud, player, interactionProcessor);
 
@@ -130,8 +134,11 @@ public class GameScreen implements Screen, AbstractScreen {
         b2dr.render(world, gameCam.combined);
 
         game.batch.begin();
+        if(PKMUtils.getCurrentGameState() != GameState.PAUSED)
+        {
+            player.move();
+        }
 
-        player.move();
         player.draw(game.batch);
 
         box2dCreator.draw(game, this); //TODO
@@ -156,7 +163,6 @@ public class GameScreen implements Screen, AbstractScreen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
