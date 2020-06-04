@@ -11,7 +11,7 @@ Items
   - ~~make items (potions/pokeball) (25th)~~
 
 Menu (27th) (TY)
-  - graphic
+  - ~~graphic~~
   - save file
   - bag interface (use and read items)
   - pokemons interface (show pokemon only) (TODO: LATER)
