@@ -23,6 +23,7 @@ public class PKMConstants {
     public static final String PLAYER_HOUSE_MAP_FILENAME = "player_house.tmx";
     public static final String HOUSE_MAP_FILENAME = "npc_house.tmx";
     public static final String LAB_MAP_FILENAME = "lab.tmx";
+    public static final String GATE_MAP_FILENAME = "gate.tmx";
 
 
     //dialog
@@ -38,6 +39,8 @@ public class PKMConstants {
     public static final String PROPERTY_LAB = "lab";
     public static final String PROPERTY_HOUSE = "house";
     public static final String PROPERTY_ROUTE = "route";
+    public static final String PROPERTY_GATE = "gate";
+    public static final String PROPERTY_TOWN = "town"; //for entering into the town
 
 
     //world map layer indexes
@@ -63,6 +66,10 @@ public class PKMConstants {
     //lab map layer indexes
     public static final int LAB_ENVIRONMENT = 1;
     public static final int LAB_EXIT = 2;
+
+    //lab map layer indexes
+    public static final int GATE_ENVIRONMENT = 1;
+    public static final int GATE_EXIT = 2;
 
     //menu image file name
     public static final String MENU_FILENAME = "badlogic.jpg";

@@ -22,6 +22,7 @@ import edu.cis.pokemon.Enums.State;
 import edu.cis.pokemon.Sprites.Environment.Door;
 import edu.cis.pokemon.Sprites.Items.Item;
 import edu.cis.pokemon.Tools.Creators.Creator;
+import edu.cis.pokemon.Tools.Creators.GateCreator;
 import edu.cis.pokemon.Tools.Creators.HouseCreator;
 import edu.cis.pokemon.Tools.Creators.LabCreator;
 import edu.cis.pokemon.Tools.Creators.PlayerHouseCreator;
@@ -89,9 +90,9 @@ public class GameScreen implements Screen, AbstractScreen {
         else if(mapName.equals(PKMConstants.LAB_MAP_FILENAME)) {
             box2dCreator = new LabCreator(this); //TODO: map doesn't load for this one
         }
-//        else if(mapName.equals(PKMConstants.route)) {
-//            box2dCreator = new (this);
-//        }
+        else if(mapName.equals(PKMConstants.GATE_MAP_FILENAME)) {
+            box2dCreator = new GateCreator(this);
+        }
         else {
             box2dCreator = new WorldMapCreator(this); //catch all
         }

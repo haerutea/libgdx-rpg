@@ -99,8 +99,8 @@ public class WorldMapCreator implements Creator {
                     mapName = PKMConstants.LAB_MAP_FILENAME;
                 } else if (door.getProperties(PKMConstants.PROPERTY_HOUSE)) {
                     mapName = PKMConstants.HOUSE_MAP_FILENAME;
-                } else if (door.getProperties(PKMConstants.PROPERTY_ROUTE)) {
-                    mapName = "";
+                } else if (door.getProperties(PKMConstants.PROPERTY_GATE)) {
+                    mapName = PKMConstants.GATE_MAP_FILENAME;
                 }
                 door.setInteracted(false);
 
