@@ -143,35 +143,17 @@ public class Hud implements Disposable
     public void changeButtonDisplay()
     {
         Gdx.app.log("currentButtonIndex", "" + currentButtonIndex);
-        Gdx.app.log("change button:", "" + buttons.get(currentButtonIndex).getText());
         currentButtonIndex = (currentButtonIndex + 1) % 3;
 
+        buttons.get(currentButtonIndex).setStyle(highlightedButtonStyle);
         if(currentButtonIndex == 0)
         {
-            bagButton.setStyle(highlightedButtonStyle);
-            saveButton.setStyle(upButtonStyle);
+            buttons.get(buttons.size() - 1).setStyle(upButtonStyle);
         }
-        else if(currentButtonIndex == 1)
+        else
         {
-            pokemonButton.setStyle(highlightedButtonStyle);
-            bagButton.setStyle(upButtonStyle);
+            buttons.get(currentButtonIndex - 1).setStyle(upButtonStyle);
         }
-        else if(currentButtonIndex == 2)
-        {
-            saveButton.setStyle(highlightedButtonStyle);
-            pokemonButton.setStyle(upButtonStyle);
-        }
-
-        //TODO: I HAVE NO IDEA WHY THE ARRAYLIST METHOD DOESN'T WORK???
-        //buttons.get(nextButtonIndex).setBackground(highlightedButtonStyle.up);
-//        if(nextButtonIndex == 0)
-//        {
-//            buttons.get(buttons.size() - 1).setStyle(upButtonStyle);
-//        }
-//        else
-//        {
-//            buttons.get(nextButtonIndex - 1).setStyle(upButtonStyle);
-//        }
 
 
     }

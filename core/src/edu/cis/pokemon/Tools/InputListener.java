@@ -75,13 +75,11 @@ public class InputListener implements InputProcessor
             switch(keycode)
             {
                 case Input.Keys.TAB:
-                    Gdx.app.log("tab", "works");
                     hud.changeButtonDisplay();
                     break;
                 case Input.Keys.X:
                     hud.setMenuVisible(false);
                     PKMUtils.setCurrentGameState(GameState.CONTINUE);
-                    Gdx.app.log("x", "works");
                     break;
                 case Input.Keys.ENTER:
                     hud.triggerButton();
