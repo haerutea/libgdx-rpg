@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="12" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="10">
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="12" height="13" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="15">
  <tileset firstgid="1" name="whole_map" tilewidth="16" tileheight="16" tilecount="1584" columns="33">
   <image source="pokemon_rpg.png" width="528" height="768"/>
  </tileset>
@@ -18,9 +18,14 @@
   <object id="5" x="112" y="64" width="64" height="16"/>
   <object id="6" x="16" y="112" width="64" height="32"/>
   <object id="7" x="112" y="112" width="64" height="32"/>
+  <object id="10" x="0" y="0" width="192" height="16"/>
+  <object id="11" x="176" y="16" width="16" height="192"/>
+  <object id="12" x="112" y="192" width="64" height="16"/>
+  <object id="13" x="0" y="16" width="16" height="192"/>
+  <object id="14" x="16" y="192" width="64" height="16"/>
  </objectgroup>
  <objectgroup id="3" name="exit">
-  <object id="9" x="80" y="176" width="32" height="16">
+  <object id="9" x="80" y="192" width="32" height="16">
    <properties>
     <property name="lab" value=""/>
    </properties>

@@ -77,6 +77,10 @@ public class HouseCreator implements Creator {
         }
     }
 
+    public Array<Door> getExits() {
+        return exits;
+    }
+
     @Override
     public void dispose() {
         for (Body body : allBodies) {

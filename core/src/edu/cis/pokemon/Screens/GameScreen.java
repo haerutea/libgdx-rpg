@@ -12,8 +12,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -40,6 +42,7 @@ public class GameScreen implements Screen, AbstractScreen {
     private Pokemon game;
     private TextureAtlas atlas;
     private String mapName;
+    private Vector2 previousPosition;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -60,10 +63,13 @@ public class GameScreen implements Screen, AbstractScreen {
     //interaction
     private InteractionProcessor interactionProcessor;
 
-    public GameScreen(Pokemon game, Player player, String mapName) {
+    public GameScreen(Pokemon game, Player player, String mapName, Vector2 position) {
         this.game = game;
         atlas = new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME);
         this.mapName = mapName;
+        Gdx.app.log("new screen position", player.box2Body.getPosition().toString());
+        previousPosition = position;
+        Gdx.app.log("new screen previousposition", previousPosition.toString());
 
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(PKMConstants.V_WIDTH, PKMConstants.V_HEIGHT, gameCam);
@@ -78,23 +84,30 @@ public class GameScreen implements Screen, AbstractScreen {
         this.world = player.getWorld();
 //        world = new World(new Vector2(0, 0), true); //sleep objects that are at rest, therefore not calculating
         b2dr = new Box2DDebugRenderer();
-        if(mapName.equals(PKMConstants.MAIN_MAP_FILENAME)){
-            box2dCreator = new WorldMapCreator(this);
-        }
-        else if(mapName.equals(PKMConstants.PLAYER_HOUSE_MAP_FILENAME)) {
-            box2dCreator = new PlayerHouseCreator(this);
-        }
-        else if(mapName.equals(PKMConstants.HOUSE_MAP_FILENAME)) {
-            box2dCreator = new HouseCreator(this);
-        }
-        else if(mapName.equals(PKMConstants.LAB_MAP_FILENAME)) {
-            box2dCreator = new LabCreator(this); //TODO: map doesn't load for this one
-        }
-        else if(mapName.equals(PKMConstants.GATE_MAP_FILENAME)) {
-            box2dCreator = new GateCreator(this);
-        }
-        else {
-            box2dCreator = new WorldMapCreator(this); //catch all
+        switch (mapName) {
+//            case PKMConstants.MAIN_MAP_FILENAME:
+//                box2dCreator = new WorldMapCreator(this);
+//                break;
+            case PKMConstants.PLAYER_HOUSE_MAP_FILENAME:
+                box2dCreator = new PlayerHouseCreator(this);
+                player.box2Body.setTransform(PKMConstants.TILE_SIZE * 4, PKMConstants.TILE_SIZE * 2, 0);
+                break;
+            case PKMConstants.HOUSE_MAP_FILENAME:
+                box2dCreator = new HouseCreator(this);
+                player.box2Body.setTransform(PKMConstants.TILE_SIZE * 4, PKMConstants.TILE_SIZE * 2, 0);
+                break;
+            case PKMConstants.LAB_MAP_FILENAME:
+                box2dCreator = new LabCreator(this);
+                player.box2Body.setTransform(PKMConstants.TILE_SIZE * 6, PKMConstants.TILE_SIZE * 2, 0);
+                break;
+            case PKMConstants.GATE_MAP_FILENAME:
+                box2dCreator = new GateCreator(this);
+                player.box2Body.setTransform(PKMConstants.TILE_SIZE * 5, PKMConstants.TILE_SIZE * 2, 0);
+                break;
+            default:
+                box2dCreator = new WorldMapCreator(this); //catch all
+                player.box2Body.setTransform(previousPosition, 0);
+                break;
         }
 
         this.player = player;
@@ -188,7 +201,18 @@ public class GameScreen implements Screen, AbstractScreen {
     }
 
     public void restart(String name){
-        game.setScreen(new GameScreen(game, player, name));
+        if(!mapName.equals(PKMConstants.MAIN_MAP_FILENAME)){
+            Gdx.app.log("position", mapName);
+            Gdx.app.log("position position", player.box2Body.getPosition().toString());
+            Gdx.app.log("position previousposition", previousPosition.toString());
+            game.setScreen(new GameScreen(game, player, name, previousPosition));
+        }
+        else {
+            Gdx.app.log("position main map", mapName);
+            Gdx.app.log("position main map position", player.box2Body.getPosition().toString());
+            Gdx.app.log("position main map previousposition", previousPosition.toString());
+            game.setScreen(new GameScreen(game, player, name, player.box2Body.getPosition()));
+        }
         this.dispose();
     }
 
