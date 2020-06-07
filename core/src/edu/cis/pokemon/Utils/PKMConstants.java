@@ -14,10 +14,12 @@ public class PKMConstants {
     public static final float MENU_Y = 0.75f;
     public static final float MENU_SCALE = 0.15f;
 
-
     //atlas file name
-    public static final String SPRITES_ATLAS_FILENAME = "pokemon_sprites.atlas";
-    public static final String BUTTON_ATLAS_FILENAME = "buttons.atlas";
+    public static final String TEXTURE_ASSETS_PACKAGE = "textures/";
+    public static final String SPRITES_ATLAS_FILENAME = TEXTURE_ASSETS_PACKAGE + "pokemon_sprites.atlas";
+    public static final String BUTTON_ATLAS_FILENAME = TEXTURE_ASSETS_PACKAGE + "buttons.atlas";
+    public static final String DIALOG_BOX_ATLAS_FILENAME = TEXTURE_ASSETS_PACKAGE + "textboxes.atlas";
+
     //map file name
     public static final String MAIN_MAP_FILENAME = "new_town.tmx";
     public static final String PLAYER_HOUSE_MAP_FILENAME = "player_house.tmx";
@@ -77,6 +79,10 @@ public class PKMConstants {
     //animation sprites
     public static final String PLAYER_SPRITE = "player";
     public static final String ITEM_SPRITE = "item";
+    public static final String[] NPC_SPRITES = {"female", "male", "mother", "professor"};
+    public static final String FEMALE_SPRITE = "item";
+    public static final String MALE_SPRITE = "male";
+    public static final String MOTHER_SPRITE = "mother";
 
     //walk animation frame duration
     public static final float PLAYER_WALK_SPEED = 0.23f;
