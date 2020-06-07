@@ -112,6 +112,10 @@ public class WorldMapCreator implements Creator {
         }
     }
 
+    public Array<Door> getExits() {
+        return doors;
+    }
+
     @Override
     public void dispose() {
         //highest index layer is trainers

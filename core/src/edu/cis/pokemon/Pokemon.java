@@ -24,7 +24,7 @@ public class Pokemon extends Game {
 		World world = new World(new Vector2(0, 0), true);
 		Player player = new Player(world, new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME).findRegion(PKMConstants.PLAYER_SPRITE));
 
-		screen = new GameScreen(this, player, PKMConstants.MAIN_MAP_FILENAME);
+		screen = new GameScreen(this, player, PKMConstants.MAIN_MAP_FILENAME, player.box2Body.getPosition());
 		this.setScreen(screen);
 	}
 

@@ -5,6 +5,8 @@ public class PKMConstants {
     public static final int V_HEIGHT = 9 * 16; //arbitrary numbers
     public static final int V_WIDTH = 11 * 16;
 
+    public static final int TILE_SIZE = 16;
+
     //HUD sizes and positions
     public static final float LABEL_FONT_SCALE = 0.5f;
     public static final float BUTTON_FONT_SCALE = 2f;

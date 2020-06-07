@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -20,6 +21,7 @@ import edu.cis.pokemon.Screens.GameScreen;
 import edu.cis.pokemon.Sprites.Environment.Door;
 
 import edu.cis.pokemon.Enums.GameState;
+import edu.cis.pokemon.Tools.Creators.Creator;
 
 public class PKMUtils
 {
@@ -111,4 +113,18 @@ public class PKMUtils
 
         return doors;
     }
+
+//    public static Vector2 spawnPlayer(Creator creator) {
+//        Array<Door> doors = creator.getExits();
+//        Vector2 position = new Vector2();
+//        position.x = PKMConstants.TILE_SIZE * 2;
+//        position.y = PKMConstants.TILE_SIZE * 2;
+//        for(Door door : doors)
+//        if(doors.size == 1) {
+//            Door door = doors.get(0);
+//            position = door.getBox2Body().getLocalCenter();
+//            position.add(PKMConstants.TILE_SIZE / 2, PKMConstants.TILE_SIZE / 2);
+//        }
+//        return position;
+//    }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="18" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="16">
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="18" height="11" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="23">
  <tileset firstgid="1" source="player_house.tsx"/>
  <tileset firstgid="145" source="black_tile.tsx"/>
  <layer id="1" name="background" width="18" height="11">
@@ -16,6 +16,13 @@
   <object id="7" x="192" y="32" width="32" height="16"/>
   <object id="8" x="224" y="80" width="48" height="32"/>
   <object id="15" x="112" y="64" width="32" height="32"/>
+  <object id="16" x="0" y="0" width="288" height="16"/>
+  <object id="17" x="272" y="16" width="16" height="160"/>
+  <object id="18" x="80" y="160" width="192" height="16"/>
+  <object id="19" x="0" y="16" width="16" height="160"/>
+  <object id="20" x="16" y="160" width="32" height="16"/>
+  <object id="21" x="32" y="128" width="16" height="32"/>
+  <object id="22" x="80" y="128" width="16" height="32"/>
  </objectgroup>
  <objectgroup id="3" name="tv">
   <object id="9" x="80" y="32" width="16" height="16"/>
@@ -25,7 +32,7 @@
   <object id="11" x="256" y="32" width="16" height="32"/>
  </objectgroup>
  <objectgroup id="5" name="exit">
-  <object id="13" x="48" y="144" width="32" height="16">
+  <object id="13" x="48" y="160" width="32" height="16">
    <properties>
     <property name="player_house" value=""/>
    </properties>
