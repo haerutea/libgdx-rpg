@@ -18,12 +18,14 @@ import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Screens.GameScreen;
 import edu.cis.pokemon.Sprites.Environment.Door;
 import edu.cis.pokemon.Sprites.Items.Item;
+import edu.cis.pokemon.Sprites.Trainer;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Utils.PKMUtils;
 
 public class WorldMapCreator implements Creator {
     private Array<Item> items;
     private Array<Door> doors;
+    private Array<Trainer> trainers;
     private Array<Body> allBodies;
 
     public WorldMapCreator(GameScreen screen)
@@ -67,8 +69,24 @@ public class WorldMapCreator implements Creator {
         }
 
         //trainers
-        //TODO: CHANGE TO MAKE new Trainer() INSTEAD
-        allBodies.addAll(PKMUtils.createBody(screen, PKMConstants.WORLD_TRAINERS));
+        trainers = new Array<>();
+        for(int i = 0; i < map.getLayers().get(PKMConstants.WORLD_TRAINERS).getObjects().getCount(); i++)
+        {
+            RectangleMapObject object = map.getLayers().get(PKMConstants.WORLD_TRAINERS).getObjects().getByType(RectangleMapObject.class).get(i);
+            Rectangle rect = object.getRectangle();
+            Trainer npcTrainer = new Trainer(screen, object, PKMConstants.NPC_SPRITES[i]);
+            trainers.add(npcTrainer);
+            allBodies.add(npcTrainer.getBox2Body());
+        }
+//        for(MapObject object : map.getLayers().get(PKMConstants.WORLD_TRAINERS).getObjects().getByType(RectangleMapObject.class))
+//        {
+//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//            Trainer npcTrainer = new Trainer(screen, object, PKMConstants.ITEM_SPRITE);
+//            trainers.add(npcTrainer);
+//            allBodies.add(npcTrainer.getBox2Body());
+//        }
+
+
     }
 
     @Override
@@ -109,6 +127,9 @@ public class WorldMapCreator implements Creator {
                     gameScreen.restart(mapName);
                 }
             }
+        }
+        for(Trainer trainer : trainers) {
+            trainer.draw(game.batch);
         }
     }
 

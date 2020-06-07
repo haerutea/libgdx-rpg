@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import edu.cis.pokemon.Enums.Direction;
 import edu.cis.pokemon.Sprites.Environment.Door;
 import edu.cis.pokemon.Sprites.Player;
+import edu.cis.pokemon.Sprites.Trainer;
 import edu.cis.pokemon.Utils.PKMConstants;
 
 public class WorldContactListener implements ContactListener
@@ -72,6 +73,18 @@ public class WorldContactListener implements ContactListener
                     }
                 }
                 break;
+            case PKMConstants.BIT_PLAYER | PKMConstants.BIT_TRAINER:
+                Gdx.app.log("item", "collided");
+                if(fixA.getFilterData().categoryBits == PKMConstants.BIT_PLAYER) //if fixA == Player
+                {
+                    Gdx.app.log("item is", "fixB");
+                    Gdx.app.log("trainer name", "" + ((Trainer) fixB.getUserData()).getIdentity());
+                }
+                else
+                {
+                    Gdx.app.log("item is", "fixA");
+                    Gdx.app.log("trainer name", "" + ((Trainer) fixB.getUserData()).getIdentity());
+                }
         }
     }
 
