@@ -26,7 +26,6 @@ public class Player extends Sprite
     private boolean facingRight;
     private float stateTimer;
 
-    //TODO: IS A DIFF VAR FOR EACH DIRECTION/STATE NEEDED?
     private TextureAtlas.AtlasRegion playerRegion;
     private TextureRegion frontStand;
     private TextureRegion backStand;
@@ -68,7 +67,8 @@ public class Player extends Sprite
                 | PKMConstants.BIT_LEDGE
                 | PKMConstants.BIT_DOOR
                 | PKMConstants.BIT_ITEM
-                | PKMConstants.BIT_GRASS;
+                | PKMConstants.BIT_GRASS
+                | PKMConstants.BIT_TRAINER;
 //        short collidesWith = PKMConstants.BIT_ITEM;
 
         FixtureDef fixtureDef = PKMUtils.createPlayerFixture(this, box2Body, PKMConstants.BIT_PLAYER, collidesWith);
@@ -135,7 +135,6 @@ public class Player extends Sprite
                 }
                 else if(currentState == State.RUNNING)
                 {
-                    Gdx.app.log("is", "running");
                     this.setRegion(frontWalk.getKeyFrame(stateTimer, true));
                 }
                 break;
