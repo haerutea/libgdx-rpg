@@ -38,7 +38,6 @@ public class InputListener implements InputProcessor
             switch(keycode)
             {
                 case Input.Keys.X:
-                    hud.setMenuVisible(true);
                     gsManager.setCurrentState(GameState.PAUSED);
                     Gdx.app.log("x", "works");
                     break;
@@ -81,7 +80,6 @@ public class InputListener implements InputProcessor
                     hud.changeButtonDisplay();
                     break;
                 case Input.Keys.X:
-                    hud.setMenuVisible(false);
                     gsManager.setCurrentState(GameState.CONTINUE);
                     break;
                 case Input.Keys.ENTER:

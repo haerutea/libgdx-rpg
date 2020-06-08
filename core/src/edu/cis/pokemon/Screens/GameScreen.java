@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import edu.cis.pokemon.Enums.GameContext;
 import edu.cis.pokemon.Enums.GameState;
 import edu.cis.pokemon.Enums.State;
 import edu.cis.pokemon.Sprites.Environment.Door;
@@ -116,7 +117,7 @@ public class GameScreen implements Screen, AbstractScreen {
 //        player = new Player(world, this);
 
 
-        this.gsManager = new GameStateManager(this.game, this.hud, GameState.CONTINUE);
+        this.gsManager = new GameStateManager(this.game, this.hud, GameState.CONTINUE, GameContext.WORLDMAP);
         interactionProcessor = InteractionProcessor.getInstance();
         InputProcessor processor = new InputListener(this, hud, player, interactionProcessor, this.gsManager);
 
@@ -162,6 +163,9 @@ public class GameScreen implements Screen, AbstractScreen {
         b2dr.render(world, gameCam.combined);
 
         game.batch.begin();
+
+        gsManager.renderCurrent();
+
         if(gsManager.getCurrentState() != GameState.PAUSED)
         {
             player.move();

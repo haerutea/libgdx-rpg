@@ -15,13 +15,14 @@ public class GameStateManager
     private Game game;
     private Hud hud;
 
-    public GameStateManager(Game game, Hud hud, GameState initialState)
+    public GameStateManager(Game game, Hud hud, GameState initialState, GameContext initalContext)
     {
         this.game = game;
         this.hud =hud;
         this.gsManager = new Stack<GameState>();
         this.screenManager = new Stack<GameContext>();
         pushCurrentState(initialState);
+        pushCurrentContext(initalContext);
     }
 
     public void pushCurrentState(GameState newState)
@@ -66,8 +67,10 @@ public class GameStateManager
         switch (getCurrentState())
         {
             case CONTINUE:
+                hud.setMenuVisible(false);
                 break;
             case PAUSED:
+                hud.setMenuVisible(true);
                 break;
             default:
                 break;
