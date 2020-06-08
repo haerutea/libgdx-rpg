@@ -1,5 +1,9 @@
 package edu.cis.pokemon.Enums;
 
-public class GameContext
+public enum GameContext
 {
+    WORLDMAP,
+    HOUSE,
+    LAB,
+    PLAYERHOUSE,
 }

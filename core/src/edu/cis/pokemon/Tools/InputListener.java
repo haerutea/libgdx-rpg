@@ -19,24 +19,27 @@ public class InputListener implements InputProcessor
     private Player player;
     private InteractionProcessor interactionProcessor;
 
-    public InputListener(AbstractScreen screen, Hud hud, Player player, InteractionProcessor interProcessor)
+    private GameStateManager gsManager;
+
+    public InputListener(AbstractScreen screen, Hud hud, Player player, InteractionProcessor interProcessor, GameStateManager gsManager)
     {
         this.screen = screen;
         this.hud = hud;
         this.player = player;
         this.interactionProcessor = interProcessor;
+        this.gsManager = gsManager;
     }
 
     @Override
     public boolean keyDown(int keycode)
     {
-        if(PKMUtils.getCurrentGameState() == GameState.CONTINUE)
+        if(gsManager.getCurrentState() == GameState.CONTINUE)
         {
             switch(keycode)
             {
                 case Input.Keys.X:
                     hud.setMenuVisible(true);
-                    PKMUtils.setCurrentGameState(GameState.PAUSED);
+                    gsManager.setCurrentState(GameState.PAUSED);
                     Gdx.app.log("x", "works");
                     break;
                 case Input.Keys.UP:
@@ -79,7 +82,7 @@ public class InputListener implements InputProcessor
                     break;
                 case Input.Keys.X:
                     hud.setMenuVisible(false);
-                    PKMUtils.setCurrentGameState(GameState.CONTINUE);
+                    gsManager.setCurrentState(GameState.CONTINUE);
                     break;
                 case Input.Keys.ENTER:
                     hud.triggerButton();

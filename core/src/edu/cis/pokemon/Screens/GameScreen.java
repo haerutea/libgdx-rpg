@@ -29,6 +29,7 @@ import edu.cis.pokemon.Tools.Creators.HouseCreator;
 import edu.cis.pokemon.Tools.Creators.LabCreator;
 import edu.cis.pokemon.Tools.Creators.PlayerHouseCreator;
 import edu.cis.pokemon.Tools.Creators.WorldMapCreator;
+import edu.cis.pokemon.Tools.GameStateManager;
 import edu.cis.pokemon.Tools.InputListener;
 import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Sprites.Player;
@@ -62,6 +63,7 @@ public class GameScreen implements Screen, AbstractScreen {
 
     //interaction
     private InteractionProcessor interactionProcessor;
+    private GameStateManager gsManager;
 
     public GameScreen(Pokemon game, Player player, String mapName, Vector2 position) {
         this.game = game;
@@ -113,9 +115,10 @@ public class GameScreen implements Screen, AbstractScreen {
         this.player = player;
 //        player = new Player(world, this);
 
-        PKMUtils.setCurrentGameState(GameState.CONTINUE);
+
+        this.gsManager = new GameStateManager(this.game, this.hud, GameState.CONTINUE);
         interactionProcessor = InteractionProcessor.getInstance();
-        InputProcessor processor = new InputListener(this, hud, player, interactionProcessor);
+        InputProcessor processor = new InputListener(this, hud, player, interactionProcessor, this.gsManager);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(hud.menuStage);
@@ -159,7 +162,7 @@ public class GameScreen implements Screen, AbstractScreen {
         b2dr.render(world, gameCam.combined);
 
         game.batch.begin();
-        if(PKMUtils.getCurrentGameState() != GameState.PAUSED)
+        if(gsManager.getCurrentState() != GameState.PAUSED)
         {
             player.move();
         }
