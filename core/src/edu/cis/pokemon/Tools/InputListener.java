@@ -1,5 +1,6 @@
 package edu.cis.pokemon.Tools;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -7,6 +8,7 @@ import com.badlogic.gdx.InputProcessor;
 import edu.cis.pokemon.Enums.Direction;
 import edu.cis.pokemon.Enums.GameState;
 import edu.cis.pokemon.Enums.State;
+import edu.cis.pokemon.Pokemon;
 import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Screens.AbstractScreen;
 import edu.cis.pokemon.Sprites.Player;
@@ -19,26 +21,26 @@ public class InputListener implements InputProcessor
     private Player player;
     private InteractionProcessor interactionProcessor;
 
-    private GameStateManager gsManager;
+    private Pokemon game;
 
-    public InputListener(AbstractScreen screen, Hud hud, Player player, InteractionProcessor interProcessor, GameStateManager gsManager)
+    public InputListener(AbstractScreen screen, Hud hud, Player player, InteractionProcessor interProcessor, Pokemon game)
     {
         this.screen = screen;
         this.hud = hud;
         this.player = player;
         this.interactionProcessor = interProcessor;
-        this.gsManager = gsManager;
+        this.game = game;
     }
 
     @Override
     public boolean keyDown(int keycode)
     {
-        if(gsManager.getCurrentState() == GameState.CONTINUE)
+        if(game.getCurrentState() == GameState.CONTINUE)
         {
             switch(keycode)
             {
                 case Input.Keys.X:
-                    gsManager.setCurrentState(GameState.PAUSED);
+                    game.setCurrentState(GameState.PAUSED);
                     Gdx.app.log("x", "works");
                     break;
                 case Input.Keys.UP:
@@ -80,7 +82,7 @@ public class InputListener implements InputProcessor
                     hud.changeButtonDisplay();
                     break;
                 case Input.Keys.X:
-                    gsManager.setCurrentState(GameState.CONTINUE);
+                    game.setCurrentState(GameState.CONTINUE);
                     break;
                 case Input.Keys.ENTER:
                     hud.triggerButton();

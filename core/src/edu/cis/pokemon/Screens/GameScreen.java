@@ -1,8 +1,6 @@
 package edu.cis.pokemon.Screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -15,22 +13,16 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-import edu.cis.pokemon.Enums.GameContext;
 import edu.cis.pokemon.Enums.GameState;
-import edu.cis.pokemon.Enums.State;
-import edu.cis.pokemon.Sprites.Environment.Door;
-import edu.cis.pokemon.Sprites.Items.Item;
 import edu.cis.pokemon.Tools.Creators.Creator;
 import edu.cis.pokemon.Tools.Creators.GateCreator;
 import edu.cis.pokemon.Tools.Creators.HouseCreator;
 import edu.cis.pokemon.Tools.Creators.LabCreator;
 import edu.cis.pokemon.Tools.Creators.PlayerHouseCreator;
 import edu.cis.pokemon.Tools.Creators.WorldMapCreator;
-import edu.cis.pokemon.Tools.GameStateManager;
 import edu.cis.pokemon.Tools.InputListener;
 import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Sprites.Player;
@@ -38,7 +30,6 @@ import edu.cis.pokemon.Tools.InteractionProcessor;
 import edu.cis.pokemon.Tools.WorldContactListener;
 import edu.cis.pokemon.Utils.PKMConstants;
 import edu.cis.pokemon.Pokemon;
-import edu.cis.pokemon.Utils.PKMUtils;
 
 public class GameScreen implements Screen, AbstractScreen {
     private Pokemon game;
@@ -64,7 +55,6 @@ public class GameScreen implements Screen, AbstractScreen {
 
     //interaction
     private InteractionProcessor interactionProcessor;
-    private GameStateManager gsManager;
 
     public GameScreen(Pokemon game, Player player, String mapName, Vector2 position) {
         this.game = game;
@@ -117,9 +107,9 @@ public class GameScreen implements Screen, AbstractScreen {
 //        player = new Player(world, this);
 
 
-        this.gsManager = new GameStateManager(this.game, this.hud, GameState.CONTINUE, GameContext.WORLDMAP);
+
         interactionProcessor = InteractionProcessor.getInstance();
-        InputProcessor processor = new InputListener(this, hud, player, interactionProcessor, this.gsManager);
+        InputProcessor processor = new InputListener(this, hud, player, interactionProcessor, game);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(hud.menuStage);
@@ -164,9 +154,9 @@ public class GameScreen implements Screen, AbstractScreen {
 
         game.batch.begin();
 
-        gsManager.renderCurrent();
 
-        if(gsManager.getCurrentState() != GameState.PAUSED)
+
+        if(game.getCurrentState() != GameState.PAUSED)
         {
             player.move();
         }
