@@ -1,12 +1,14 @@
 package edu.cis.pokemon;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.ArrayList;
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 import edu.cis.pokemon.Enums.GameContext;
@@ -22,7 +24,7 @@ public class Pokemon extends Game {
 	//Texture img;
 
 	private GameScreen screen;
-
+	private Player player;
 
 	private Stack<GameState> gsManager;
 	private Stack<GameContext> screenManager;
@@ -38,10 +40,9 @@ public class Pokemon extends Game {
 		pushCurrentContext(GameContext.WORLDMAP);
 
 		World world = new World(new Vector2(0, 0), true);
-		Player player = new Player(world, new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME).findRegion(PKMConstants.PLAYER_SPRITE));
+		player = new Player(world, new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME).findRegion(PKMConstants.PLAYER_SPRITE));
 
-
-		screen = new GameScreen(this, player, PKMConstants.MAIN_MAP_FILENAME, player.box2Body.getPosition());
+		screen = new GameScreen(this, player, PKMConstants.MAIN_MAP_FILENAME);
 		this.setScreen(screen);
 	}
 
@@ -73,8 +74,21 @@ public class Pokemon extends Game {
 
 	public void setCurrentContext(GameContext newContext)
 	{
-		this.screenManager.pop();
+//		this.screenManager.pop();
 		this.screenManager.push(newContext);
+	}
+
+	public GameContext getPreviousContext()
+	{
+		GameContext currentContext = this.screenManager.pop();
+		GameContext oldContext;
+		try{
+			oldContext = this.screenManager.peek();
+		} catch (EmptyStackException e) {
+			oldContext = currentContext;
+		}
+		this.screenManager.push(currentContext);
+		return oldContext;
 	}
 
 	public GameContext getCurrentContext()
@@ -85,6 +99,7 @@ public class Pokemon extends Game {
 	@Override
 	public void render () {
         super.render();
+//		Gdx.app.log("context", "" + getCurrentContext());
 		switch (getCurrentState())
 		{
 			case CONTINUE:
@@ -99,33 +114,61 @@ public class Pokemon extends Game {
 
 		switch (getCurrentContext())
 		{
+			case GATE:
+				if(getPreviousContext() != GameContext.GATE)
+				{
+					screen = new GameScreen(this, player, PKMConstants.GATE_MAP_FILENAME);
+//					screen.dispose();
+					this.setScreen(screen);
+					setCurrentContext(GameContext.GATE);
+				}
+				break;
 			case LAB:
+				if(getPreviousContext() != GameContext.LAB)
+				{
+					screen = new GameScreen(this, player, PKMConstants.LAB_MAP_FILENAME);
+//					screen.dispose();
+					this.setScreen(screen);
+					setCurrentContext(GameContext.LAB);
+				}
 				break;
 			case HOUSE:
+				if(getPreviousContext() != GameContext.HOUSE)
+				{
+					screen.dispose();
+					screen = new GameScreen(this, player, PKMConstants.HOUSE_MAP_FILENAME);
+					this.setScreen(screen);
+					setCurrentContext(GameContext.HOUSE);
+				}
 				break;
 			case WORLDMAP:
-				if(getCurrentContext() != GameContext.WORLDMAP)
+				if(getPreviousContext() != GameContext.WORLDMAP)
 				{
-					ArrayList<Integer> fixtures = new ArrayList<>();
-					fixtures.add(PKMConstants.WORLD_ENVIRONMENT);
-					fixtures.add(PKMConstants.WORLD_GRASS);
-					fixtures.add(PKMConstants.WORLD_LEDGES);
-					fixtures.add(PKMConstants.WORLD_SIGNS);
-					Creator b2dCreator = new GenericCreator(screen, fixtures,
-							PKMConstants.WORLD_DOORS,
-							PKMConstants.WORLD_ITEMS,
-							PKMConstants.WORLD_TRAINERS);
-//                    GameScreen worldScreen =
-//                    this.setScreen();
+					screen.dispose();
+					screen = new GameScreen(this, player, PKMConstants.MAIN_MAP_FILENAME);
+					this.setScreen(screen);
+					setCurrentContext(GameContext.WORLDMAP);
 				}
 				break;
 			case PLAYERHOUSE:
+				if(getPreviousContext() != GameContext.PLAYERHOUSE)
+				{
+					screen.dispose();
+					screen = new GameScreen(this, player, PKMConstants.PLAYER_HOUSE_MAP_FILENAME);
+					this.setScreen(screen);
+					setCurrentContext(GameContext.PLAYERHOUSE);
+				}
 				break;
 			default:
 				break;
 		}
 	}
-	
+
+	@Override
+	public GameScreen getScreen() {
+		return screen;
+	}
+
 	@Override
 	public void dispose () {
 		super.dispose();

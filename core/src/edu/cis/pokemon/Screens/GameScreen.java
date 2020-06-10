@@ -16,13 +16,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.ArrayList;
+
 import edu.cis.pokemon.Enums.GameState;
-import edu.cis.pokemon.Tools.Creators.Creator;
-import edu.cis.pokemon.Tools.Creators.GateCreator;
-import edu.cis.pokemon.Tools.Creators.HouseCreator;
-import edu.cis.pokemon.Tools.Creators.LabCreator;
-import edu.cis.pokemon.Tools.Creators.PlayerHouseCreator;
-import edu.cis.pokemon.Tools.Creators.WorldMapCreator;
+import edu.cis.pokemon.Tools.Creators.GenericCreator;
 import edu.cis.pokemon.Tools.InputListener;
 import edu.cis.pokemon.Scenes.Hud;
 import edu.cis.pokemon.Sprites.Player;
@@ -48,7 +45,7 @@ public class GameScreen implements Screen, AbstractScreen {
     //Box2D variables
     private World world;
     private Box2DDebugRenderer b2dr; //gives graphical representation of bodies in box2d world
-    private Creator box2dCreator;
+    private GenericCreator box2dCreator;
 
     //sprites
     private Player player;
@@ -56,13 +53,10 @@ public class GameScreen implements Screen, AbstractScreen {
     //interaction
     private InteractionProcessor interactionProcessor;
 
-    public GameScreen(Pokemon game, Player player, String mapName, Vector2 position) {
+    public GameScreen(Pokemon game, Player player, String mapName) {
         this.game = game;
         atlas = new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME);
         this.mapName = mapName;
-        Gdx.app.log("new screen position", player.box2Body.getPosition().toString());
-        previousPosition = position;
-        Gdx.app.log("new screen previousposition", previousPosition.toString());
 
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(PKMConstants.V_WIDTH, PKMConstants.V_HEIGHT, gameCam);
@@ -77,29 +71,53 @@ public class GameScreen implements Screen, AbstractScreen {
         this.world = player.getWorld();
 //        world = new World(new Vector2(0, 0), true); //sleep objects that are at rest, therefore not calculating
         b2dr = new Box2DDebugRenderer();
+        ArrayList<Integer> fixtures = new ArrayList<>();
         switch (mapName) {
-//            case PKMConstants.MAIN_MAP_FILENAME:
-//                box2dCreator = new WorldMapCreator(this);
-//                break;
             case PKMConstants.PLAYER_HOUSE_MAP_FILENAME:
-                box2dCreator = new PlayerHouseCreator(this);
+                fixtures.add(PKMConstants.PLAYER_HOUSE_ENVIRONMENT);
+                fixtures.add(PKMConstants.PLAYER_HOUSE_TV);
+                fixtures.add(PKMConstants.PLAYER_HOUSE_BED);
+                box2dCreator = new GenericCreator(this, fixtures,
+                        PKMConstants.PLAYER_HOUSE_EXIT,
+                        -1,
+                        -1);
+                fixtures.clear();
                 player.box2Body.setTransform(PKMConstants.TILE_SIZE * 4, PKMConstants.TILE_SIZE * 2, 0);
                 break;
             case PKMConstants.HOUSE_MAP_FILENAME:
-                box2dCreator = new HouseCreator(this);
+                fixtures.add(PKMConstants.HOUSE_ENVIRONMENT);
+                fixtures.add(PKMConstants.HOUSE_TV);
+                fixtures.add(PKMConstants.HOUSE_EXIT);
+                box2dCreator = new GenericCreator(this, fixtures,
+                        PKMConstants.HOUSE_EXIT, -1, -1);
+                fixtures.clear();
                 player.box2Body.setTransform(PKMConstants.TILE_SIZE * 4, PKMConstants.TILE_SIZE * 2, 0);
                 break;
             case PKMConstants.LAB_MAP_FILENAME:
-                box2dCreator = new LabCreator(this);
+                fixtures.add(PKMConstants.LAB_ENVIRONMENT);
+                box2dCreator = new GenericCreator(this, fixtures,
+                        PKMConstants.LAB_EXIT, -1, -1);
+                fixtures.clear();
                 player.box2Body.setTransform(PKMConstants.TILE_SIZE * 6, PKMConstants.TILE_SIZE * 2, 0);
                 break;
             case PKMConstants.GATE_MAP_FILENAME:
-                box2dCreator = new GateCreator(this);
+                fixtures.add(PKMConstants.GATE_ENVIRONMENT);
+                box2dCreator = new GenericCreator(this, fixtures,
+                        PKMConstants.GATE_EXIT, -1, -1);
+                fixtures.clear();
                 player.box2Body.setTransform(PKMConstants.TILE_SIZE * 5, PKMConstants.TILE_SIZE * 2, 0);
                 break;
             default:
-                box2dCreator = new WorldMapCreator(this); //catch all
-                player.box2Body.setTransform(previousPosition, 0);
+                fixtures.add(PKMConstants.WORLD_ENVIRONMENT);
+                fixtures.add(PKMConstants.WORLD_GRASS);
+                fixtures.add(PKMConstants.WORLD_LEDGES);
+                fixtures.add(PKMConstants.WORLD_SIGNS);
+                box2dCreator = new GenericCreator(this, fixtures,
+                        PKMConstants.WORLD_DOORS,
+                        PKMConstants.WORLD_ITEMS,
+                        PKMConstants.WORLD_TRAINERS);
+                fixtures.clear();
+//                player.box2Body.setTransform(previousPosition, 0);
                 break;
         }
 
@@ -155,7 +173,6 @@ public class GameScreen implements Screen, AbstractScreen {
         game.batch.begin();
 
 
-
         if(game.getCurrentState() != GameState.PAUSED)
         {
             player.move();
@@ -197,21 +214,15 @@ public class GameScreen implements Screen, AbstractScreen {
 
     }
 
-    public void restart(String name){
-        if(!mapName.equals(PKMConstants.MAIN_MAP_FILENAME)){
-            Gdx.app.log("position", mapName);
-            Gdx.app.log("position position", player.box2Body.getPosition().toString());
-            Gdx.app.log("position previousposition", previousPosition.toString());
-            game.setScreen(new GameScreen(game, player, name, previousPosition));
-        }
-        else {
-            Gdx.app.log("position main map", mapName);
-            Gdx.app.log("position main map position", player.box2Body.getPosition().toString());
-            Gdx.app.log("position main map previousposition", previousPosition.toString());
-            game.setScreen(new GameScreen(game, player, name, player.box2Body.getPosition()));
-        }
-        this.dispose();
-    }
+//    public void restart(String name){
+//        if(!mapName.equals(PKMConstants.MAIN_MAP_FILENAME)){
+//            game.setScreen(new GameScreen(game, player, name, previousPosition));
+//        }
+//        else {
+//            game.setScreen(new GameScreen(game, player, name, player.box2Body.getPosition()));
+//        }
+//        this.dispose();
+//    }
 
     @Override
     public void dispose()

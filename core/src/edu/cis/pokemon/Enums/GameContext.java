@@ -6,4 +6,5 @@ public enum GameContext
     HOUSE,
     LAB,
     PLAYERHOUSE,
+    GATE,
 }

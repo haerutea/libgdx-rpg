@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.ArrayList;
 
+import edu.cis.pokemon.Enums.GameContext;
 import edu.cis.pokemon.Pokemon;
 import edu.cis.pokemon.Screens.GameScreen;
 import edu.cis.pokemon.Sprites.Environment.Door;
@@ -54,22 +55,25 @@ public class GenericCreator implements Creator
         }
 
         items = new Array<>();
-        for(MapObject object : map.getLayers().get(itemNames).getObjects().getByType(RectangleMapObject.class))
-        {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            Item item = new Item(screen, object);
-            items.add(item);
-            allBodies.add(item.getBox2Body());
+        if(itemNames != -1) {
+            for(MapObject object : map.getLayers().get(itemNames).getObjects().getByType(RectangleMapObject.class))
+            {
+                Rectangle rect = ((RectangleMapObject) object).getRectangle();
+                Item item = new Item(screen, object);
+                items.add(item);
+                allBodies.add(item.getBox2Body());
+            }
         }
 
         trainers = new Array<>();
-        for(int i = 0; i < map.getLayers().get(trainerNames).getObjects().getCount(); i++)
-        {
-            RectangleMapObject object = map.getLayers().get(PKMConstants.WORLD_TRAINERS).getObjects().getByType(RectangleMapObject.class).get(i);
-            Rectangle rect = object.getRectangle();
-            Trainer npcTrainer = new Trainer(screen, object, PKMConstants.NPC_SPRITES[i]);
-            trainers.add(npcTrainer);
-            allBodies.add(npcTrainer.getBox2Body());
+        if(trainerNames != -1) {
+            for (int i = 0; i < map.getLayers().get(trainerNames).getObjects().getCount(); i++) {
+                RectangleMapObject object = map.getLayers().get(PKMConstants.WORLD_TRAINERS).getObjects().getByType(RectangleMapObject.class).get(i);
+                Rectangle rect = object.getRectangle();
+                Trainer npcTrainer = new Trainer(screen, object, PKMConstants.NPC_SPRITES[i]);
+                trainers.add(npcTrainer);
+                allBodies.add(npcTrainer.getBox2Body());
+            }
         }
     }
 
@@ -92,25 +96,24 @@ public class GenericCreator implements Creator
         for(Door door : doors) {
             door.draw(game.batch);
 
-            String mapName = "";
             if (door.isInteracted()) {
-                if (door.getProperties(PKMConstants.PROPERTY_PLAYER_HOUSE)) {
-                    mapName = PKMConstants.PLAYER_HOUSE_MAP_FILENAME;
-                } else if (door.getProperties(PKMConstants.PROPERTY_LAB)) {
-                    mapName = PKMConstants.LAB_MAP_FILENAME;
-                } else if (door.getProperties(PKMConstants.PROPERTY_HOUSE)) {
-                    mapName = PKMConstants.HOUSE_MAP_FILENAME;
-                } else if (door.getProperties(PKMConstants.PROPERTY_GATE)) {
-                    mapName = PKMConstants.GATE_MAP_FILENAME;
+                if(game.getCurrentContext() == GameContext.WORLDMAP) {
+                    if (door.getProperties(PKMConstants.PROPERTY_PLAYER_HOUSE)) {
+                        game.setCurrentContext(GameContext.PLAYERHOUSE);
+                    } else if (door.getProperties(PKMConstants.PROPERTY_LAB)) {
+                        game.setCurrentContext(GameContext.LAB);
+                    } else if (door.getProperties(PKMConstants.PROPERTY_HOUSE)) {
+                        game.setCurrentContext(GameContext.HOUSE);
+                    } else if (door.getProperties(PKMConstants.PROPERTY_GATE)) {
+                        game.setCurrentContext(GameContext.GATE);
+                    }
+                } else {
+                    game.setCurrentContext(GameContext.WORLDMAP);
                 }
                 door.setInteracted(false);
-
-                if(!mapName.equals("")) {
-                    gameScreen.setMapName(mapName);
-                    gameScreen.restart(mapName);
-                }
             }
         }
+
         for(Trainer trainer : trainers) {
             trainer.draw(game.batch);
         }

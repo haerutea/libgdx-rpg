@@ -62,21 +62,6 @@ public class Door extends Sprite implements Interactable {
     @Override
     public void interact() {
         interacted = true;
-//        switch (mapObject.getProperties().toString()) {
-//            case PKMConstants.PROPERTY_LAB:
-//
-//                break;
-//            case PKMConstants.PROPERTY_PLAYER_HOUSE:
-//                PlayerHouseScreen screen = new PlayerHouseScreen();
-//                break;
-//            case PKMConstants.PROPERTY_HOUSE:
-//
-//                break;
-//            case PKMConstants.PROPERTY_ROUTE:
-//
-//                break;
-//
-//        }
     }
 
     public Body getBox2Body() {
