@@ -32,7 +32,6 @@ public class Pokemon extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		//img = new Texture("badlogic.jpg");
 
 		this.gsManager = new Stack<GameState>();
 		this.screenManager = new Stack<GameContext>();
@@ -42,7 +41,7 @@ public class Pokemon extends Game {
 		World world = new World(new Vector2(0, 0), true);
 		player = new Player(world, new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME).findRegion(PKMConstants.PLAYER_SPRITE));
 
-		screen = new GameScreen(this, player, PKMConstants.MAIN_MAP_FILENAME);
+		screen = new GameScreen(this, player, PKMConstants.MAIN_MAP_FILENAME, player.getX(), player.getY());
 		this.setScreen(screen);
 	}
 
@@ -117,8 +116,11 @@ public class Pokemon extends Game {
 			case GATE:
 				if(getPreviousContext() != GameContext.GATE)
 				{
-					screen = new GameScreen(this, player, PKMConstants.GATE_MAP_FILENAME);
-//					screen.dispose();
+					float prevX = player.box2Body.getPosition().x;
+					float prevY = player.box2Body.getPosition().y;
+					screen.dispose();
+					screen = new GameScreen(this, player, PKMConstants.GATE_MAP_FILENAME,
+							prevX, prevY - PKMConstants.TILE_SIZE / 4);
 					this.setScreen(screen);
 					setCurrentContext(GameContext.GATE);
 				}
@@ -126,8 +128,11 @@ public class Pokemon extends Game {
 			case LAB:
 				if(getPreviousContext() != GameContext.LAB)
 				{
-					screen = new GameScreen(this, player, PKMConstants.LAB_MAP_FILENAME);
-//					screen.dispose();
+					float prevX = player.box2Body.getPosition().x;
+					float prevY = player.box2Body.getPosition().y;
+					screen.dispose();
+					screen = new GameScreen(this, player, PKMConstants.LAB_MAP_FILENAME,
+							prevX, prevY - PKMConstants.TILE_SIZE / 4);
 					this.setScreen(screen);
 					setCurrentContext(GameContext.LAB);
 				}
@@ -135,8 +140,11 @@ public class Pokemon extends Game {
 			case HOUSE:
 				if(getPreviousContext() != GameContext.HOUSE)
 				{
+					float prevX = player.box2Body.getPosition().x;
+					float prevY = player.box2Body.getPosition().y;
 					screen.dispose();
-					screen = new GameScreen(this, player, PKMConstants.HOUSE_MAP_FILENAME);
+					screen = new GameScreen(this, player, PKMConstants.HOUSE_MAP_FILENAME,
+							prevX, prevY - PKMConstants.TILE_SIZE / 4);
 					this.setScreen(screen);
 					setCurrentContext(GameContext.HOUSE);
 				}
@@ -144,8 +152,11 @@ public class Pokemon extends Game {
 			case WORLDMAP:
 				if(getPreviousContext() != GameContext.WORLDMAP)
 				{
+					float prevX = getScreen().getPrevX();
+					float prevY = getScreen().getPrevY();
 					screen.dispose();
-					screen = new GameScreen(this, player, PKMConstants.MAIN_MAP_FILENAME);
+					screen = new GameScreen(this, player, PKMConstants.MAIN_MAP_FILENAME,
+							prevX, prevY);
 					this.setScreen(screen);
 					setCurrentContext(GameContext.WORLDMAP);
 				}
@@ -153,8 +164,11 @@ public class Pokemon extends Game {
 			case PLAYERHOUSE:
 				if(getPreviousContext() != GameContext.PLAYERHOUSE)
 				{
+					float prevX = player.box2Body.getPosition().x;
+					float prevY = player.box2Body.getPosition().y;
 					screen.dispose();
-					screen = new GameScreen(this, player, PKMConstants.PLAYER_HOUSE_MAP_FILENAME);
+					screen = new GameScreen(this, player, PKMConstants.PLAYER_HOUSE_MAP_FILENAME,
+							prevX, prevY - PKMConstants.TILE_SIZE / 4);
 					this.setScreen(screen);
 					setCurrentContext(GameContext.PLAYERHOUSE);
 				}

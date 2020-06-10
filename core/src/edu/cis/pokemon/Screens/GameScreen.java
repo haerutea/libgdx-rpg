@@ -32,7 +32,8 @@ public class GameScreen implements Screen, AbstractScreen {
     private Pokemon game;
     private TextureAtlas atlas;
     private String mapName;
-    private Vector2 previousPosition;
+    private float prevX;
+    private float prevY;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -53,10 +54,15 @@ public class GameScreen implements Screen, AbstractScreen {
     //interaction
     private InteractionProcessor interactionProcessor;
 
-    public GameScreen(Pokemon game, Player player, String mapName) {
+    public GameScreen(Pokemon game, Player player, String mapName, float x, float y) {
         this.game = game;
         atlas = new TextureAtlas(PKMConstants.SPRITES_ATLAS_FILENAME);
         this.mapName = mapName;
+
+        prevX = x;
+        prevY = y;
+
+        this.player = player;
 
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(PKMConstants.V_WIDTH, PKMConstants.V_HEIGHT, gameCam);
@@ -71,6 +77,8 @@ public class GameScreen implements Screen, AbstractScreen {
         this.world = player.getWorld();
 //        world = new World(new Vector2(0, 0), true); //sleep objects that are at rest, therefore not calculating
         b2dr = new Box2DDebugRenderer();
+
+
         ArrayList<Integer> fixtures = new ArrayList<>();
         switch (mapName) {
             case PKMConstants.PLAYER_HOUSE_MAP_FILENAME:
@@ -117,14 +125,9 @@ public class GameScreen implements Screen, AbstractScreen {
                         PKMConstants.WORLD_ITEMS,
                         PKMConstants.WORLD_TRAINERS);
                 fixtures.clear();
-//                player.box2Body.setTransform(previousPosition, 0);
+                player.box2Body.setTransform(prevX, prevY, 0);
                 break;
         }
-
-        this.player = player;
-//        player = new Player(world, this);
-
-
 
         interactionProcessor = InteractionProcessor.getInstance();
         InputProcessor processor = new InputListener(this, hud, player, interactionProcessor, game);
@@ -231,6 +234,14 @@ public class GameScreen implements Screen, AbstractScreen {
         box2dCreator.dispose();
         renderer.dispose();
         hud.dispose();
+    }
+
+    public float getPrevX() {
+        return prevX;
+    }
+
+    public float getPrevY() {
+        return prevY;
     }
 
     public TextureAtlas getAtlas()
